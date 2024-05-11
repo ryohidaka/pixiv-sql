@@ -1,5 +1,5 @@
 [project]
-name = "python-package-template"
+name = "pixiv-sql"
 version = "0.1.0"
 description = "Add your description here"
 authors = [
@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">= 3.8"
 
 [project.scripts]
-"python-package-template" = "python_package_template:main"
+"pixiv-sql" = "pixiv_sql:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -28,4 +28,4 @@ dev-dependencies = [
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/python_package_template"]
+packages = ["src/pixiv_sql"]
