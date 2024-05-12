@@ -4,6 +4,7 @@ from pixiv_sql.lib.bookmark import get_restrict
 from pixiv_sql.lib.logger import init_logger
 from pixivpy.auth import init_api
 from pixivpy.bookmark import get_bookmarks
+from sqlite.bookmarks import create_bookmarks_table
 
 # Load .env file and reflect environment variables.
 load_dotenv()
@@ -14,15 +15,16 @@ def main() -> int:
 
     user_id = os.environ.get("USER_ID")
     refresh_token = os.environ.get("REFRESH_TOKEN")
+    database = os.environ.get("DB")
 
-    app = PixivSQL(user_id, refresh_token)
+    app = PixivSQL(user_id, refresh_token, database)
     app.bookmark()
 
     return 0
 
 
 class PixivSQL:
-    def __init__(self, user_id: str, refresh_token: str):
+    def __init__(self, user_id: str, refresh_token: str, database: str):
         """
         The constructor for the PixivSQL class.
 
@@ -33,9 +35,10 @@ class PixivSQL:
 
         self.logger = init_logger()
 
-        # Set the user ID and refresh token.
+        # Set the user ID, refresh token and database.
         self.user_id = user_id
         self.refresh_token = refresh_token
+        self.database = database
 
         self.logger.info(f"UserID: {self.user_id}")
 
@@ -59,3 +62,6 @@ class PixivSQL:
         # Fetch the bookmarks from the Pixiv API.
         bookmarks = get_bookmarks(self)
         print(len(bookmarks))
+
+        # Create the bookmarks table in the database.
+        create_bookmarks_table(self)
