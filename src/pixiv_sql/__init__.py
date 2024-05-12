@@ -5,7 +5,7 @@ from pixiv_sql.lib.logger import init_logger
 from pixivpy.auth import init_api
 from pixivpy.bookmark import get_bookmarks
 from sqlite.bookmarks import create_bookmarks_table, insert_bookmarks
-from sqlite.users import create_users_table
+from sqlite.users import create_users_table, insert_users
 
 # Load .env file and reflect environment variables.
 load_dotenv()
@@ -71,3 +71,6 @@ class PixivSQL:
 
         # Create the users table in the database.
         create_users_table(self)
+
+        # Insert the fetched users into the database.
+        insert_users(self, bookmarks)
