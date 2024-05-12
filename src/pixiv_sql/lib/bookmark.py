@@ -23,3 +23,31 @@ def get_restrict(self, is_private: bool) -> Literal["private", "public"]:
 
     # Return the restriction level
     return restrict
+
+
+def get_bookmarks_insert(bookmarks) -> list[tuple]:
+    """
+    This function prepares the bookmark data for insertion into the database.
+
+    Args:
+        bookmarks (list): A list of dictionaries where each dictionary represents a bookmark.
+
+    Returns:
+        list[tuple]: A list of tuples where each tuple contains the bookmark data to be inserted.
+    """
+    # Prepare the data for each bookmark
+    inserts = [
+        (
+            bookmark["id"],
+            bookmark["title"],
+            bookmark["type"],
+            bookmark["caption"],
+            bookmark["user"]["id"],
+            bookmark["visible"],
+            bookmark["illust_ai_type"],
+            bookmark["illust_book_style"],
+        )
+        for bookmark in bookmarks  # Iterate over each bookmark
+    ]
+
+    return inserts  # Return the prepared data
