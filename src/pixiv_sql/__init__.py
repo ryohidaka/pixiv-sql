@@ -5,6 +5,7 @@ from pixiv_sql.lib.logger import init_logger
 from pixivpy.auth import init_api
 from pixivpy.bookmark import get_bookmarks
 from sqlite.bookmarks import create_bookmarks_table, insert_bookmarks
+from sqlite.bookmarks_tags import create_bookmarks_tags_table
 from sqlite.tags import create_tags_table, insert_tags
 from sqlite.users import create_users_table, insert_users
 
@@ -81,3 +82,6 @@ class PixivSQL:
 
         # Insert the fetched tags into the database.
         insert_tags(self, bookmarks)
+
+        # Create the bookmarks_tags table in the database.
+        create_bookmarks_tags_table(self)
