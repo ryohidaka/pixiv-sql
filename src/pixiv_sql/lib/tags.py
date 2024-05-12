@@ -21,6 +21,25 @@ def get_tags_inserts(bookmarks) -> list:
     return inserts
 
 
+def get_bookmarks_tags_inserts(bookmarks) -> list:
+    """
+    Generate a list of tuples containing bookmark id and unique index for each tag in the bookmarks.
+
+    Parameters:
+    bookmarks (list): A list of bookmarks where each bookmark is a dictionary containing 'id' and 'tags'.
+
+    Returns:
+    inserts (list): A list of tuples where each tuple contains bookmark id and unique index of a tag.
+    """
+    inserts = []
+    for item in bookmarks:
+        for tag in item["tags"]:
+            unique_index = generate_unique_index(tag["name"])
+            inserts.append((item["id"], unique_index))
+
+    return inserts
+
+
 def generate_unique_index(name) -> int:
     """
     Generate a unique index for a given name using SHA-256 hashing.
