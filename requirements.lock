@@ -20,6 +20,8 @@ pixivpy3==3.7.5
     # via pixiv-sql
 pyparsing==3.1.2
     # via cloudscraper
+python-dotenv==1.0.1
+    # via pixiv-sql
 requests==2.31.0
     # via cloudscraper
     # via pixivpy3
