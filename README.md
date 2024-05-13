@@ -16,13 +16,20 @@ pip install pixiv-sql
 
 ## Usage
 
-Create dataBase file
+### Create dataBase file
 
 ```bash
 touch db/my_pixiv.db
 ```
 
-Initialize the PixivSQL class with your Pixiv user ID, refresh token, and database:
+### Get `refresh_token`
+
+> To get `refresh_token`, see
+> [@ZipFile Pixiv OAuth Flow](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362)
+> or
+> [OAuth with Selenium/ChromeDriver](https://gist.github.com/upbit/6edda27cb1644e94183291109b8a5fde)
+
+### Initialize the PixivSQL class with your Pixiv user ID, refresh token, and database:
 
 ```python
 user_id = "your_user_id"
@@ -32,7 +39,7 @@ database = "db/my_pixiv.db"
 app = PixivSQL(user_id, refresh_token, database)
 ```
 
-You can then fetch your bookmarked illusts and insert them into the database:
+### You can then fetch your bookmarked illusts and insert them into the database:
 
 ```python
 app.bookmarked_illusts()
