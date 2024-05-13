@@ -27,9 +27,7 @@ def get_bookmarks(self):
             if next_url:
                 next_qs = self.api.parse_qs(res.next_url)
                 self.logger.info(f"Next: {next_qs}")
-                time.sleep(2)
                 res = fetch_bookmarks(self, **next_qs)
-                time.sleep(2)
             else:
                 break
 
