@@ -1,17 +1,17 @@
-def get_users_inserts(bookmarks):
+def get_users_inserts(illusts: list) -> list:
     """
     This function generates a list of tuples containing user information.
 
     Parameters:
-    bookmarks (list): A list of dictionaries where each dictionary represents a bookmark.
-                      Each bookmark dictionary contains a 'user' dictionary with user details.
+    illusts (list): A list of dictionaries where each dictionary represents a bookmarked illust.
+                      Each illust dictionary contains a 'user' dictionary with user details.
 
     Returns:
     inserts (list): A list of tuples where each tuple contains user id, name, account, and follow status.
     """
 
     # Create a dictionary of unique users using user id as the key
-    users = {item["user"]["id"]: item["user"] for item in bookmarks}
+    users = {illust["user"]["id"]: illust["user"] for illust in illusts}
 
     inserts = []
 

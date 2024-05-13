@@ -1,17 +1,17 @@
 import hashlib
 
 
-def get_tags_inserts(bookmarks) -> list:
+def get_tags_inserts(illusts: list) -> list:
     """
-    Generate a list of tuples containing unique index, name, and translated name for each tag in the bookmarks.
+    Generate a list of tuples containing unique index, name, and translated name for each tag in the illust.
 
     Parameters:
-    bookmarks (list): A list of bookmarks where each bookmark is a dictionary containing 'id' and 'tags'.
+    illusts (list): A list of bookmarked illusts where each illust is a dictionary containing 'id' and 'tags'.
 
     Returns:
     inserts (list): A list of tuples where each tuple contains unique index, name, and translated name of a tag.
     """
-    all_tags = [tag for item in bookmarks for tag in item["tags"]]
+    all_tags = [tag for item in illusts for tag in item["tags"]]
     tags = [dict(t) for t in set(tuple(d.items()) for d in all_tags)]
     inserts = []
     for tag in tags:
@@ -21,21 +21,21 @@ def get_tags_inserts(bookmarks) -> list:
     return inserts
 
 
-def get_bookmarks_tags_inserts(bookmarks) -> list:
+def get_bookmarks_tags_inserts(illusts: list) -> list:
     """
-    Generate a list of tuples containing bookmark id and unique index for each tag in the bookmarks.
+    Generate a list of tuples containing illust_id and tag_id in the bookmarked illusts.
 
     Parameters:
-    bookmarks (list): A list of bookmarks where each bookmark is a dictionary containing 'id' and 'tags'.
+    illusts (list): A list of bookmarked illusts where each illust is a dictionary containing 'id' and 'tags'.
 
     Returns:
-    inserts (list): A list of tuples where each tuple contains bookmark id and unique index of a tag.
+    inserts (list): A list of tuples where each tuple contains illust_id and unique index of a tag.
     """
     inserts = []
-    for item in bookmarks:
-        for tag in item["tags"]:
+    for ilusts in illusts:
+        for tag in ilusts["tags"]:
             unique_index = generate_unique_index(tag["name"])
-            inserts.append((item["id"], unique_index))
+            inserts.append((ilusts["id"], unique_index))
 
     return inserts
 

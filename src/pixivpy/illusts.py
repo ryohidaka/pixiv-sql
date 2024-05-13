@@ -1,33 +1,32 @@
 import time
 
 
-def get_bookmarks(self):
+def get_bookmarked_illusts(self):
     """
-    This function retrieves a list of bookmarks for a user.
+    This function retrieves a list of bookmarked illusts for a user.
     It fetches bookmarks in a loop until there are no more bookmarks to fetch.
     If an error occurs during the fetching process, it logs the error and breaks the loop.
     """
 
-    self.logger.info("[Start] Getting bookmark list")
+    self.logger.info("[Start] Getting bookmarked illust list")
 
-    # Define a list to store bookmarks.
-    bookmarks = []
+    # Define a list to store illusts.
+    illusts = []
 
-    # Get a list of bookmarks.
-    res = fetch_bookmarks(self)
+    # Get a list of bookmarked illusts.
+    res = fetch_bookmarked_illusts(self)
 
     while res:
         try:
             # Extract the illustrations from the response.
-            illusts = res.illusts
-            bookmarks += illusts
+            illusts += res.illusts
             next_url = res.next_url
 
-            # If there is a next URL, parse it and fetch the next set of bookmarks.
+            # If there is a next URL, parse it and fetch the next set of bookmarked illusts.
             if next_url:
                 next_qs = self.api.parse_qs(res.next_url)
                 self.logger.info(f"Next: {next_qs}")
-                res = fetch_bookmarks(self, **next_qs)
+                res = fetch_bookmarked_illusts(self, **next_qs)
             else:
                 break
 
@@ -35,14 +34,14 @@ def get_bookmarks(self):
             self.logger.error("Failed to get the bookmark.:", str(e))
             break
 
-    self.logger.info("[End] Getting bookmark list")
+    self.logger.info("[End] Getting bookmarked illust list")
 
-    return bookmarks
+    return illusts
 
 
-def fetch_bookmarks(self, **kwargs):
+def fetch_bookmarked_illusts(self, **kwargs):
     """
-    This function fetches bookmarks for a given user ID.
+    This function fetches bookmarked illusts for a given user ID.
     It makes a call to the Pixiv API and returns the response.
     If an error occurs during the API call, it logs the error and returns None.
     """
@@ -60,5 +59,5 @@ def fetch_bookmarks(self, **kwargs):
         time.sleep(5)
         return res
     except Exception as e:
-        self.logger.error("Failed to fetch bookmarks: ", str(e))
+        self.logger.error("Failed to fetch bookmarked illusts: ", str(e))
         return None

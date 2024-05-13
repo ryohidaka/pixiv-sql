@@ -32,10 +32,10 @@ database = "db/my_pixiv.db"
 app = PixivSQL(user_id, refresh_token, database)
 ```
 
-You can then fetch your bookmarks and insert them into the database:
+You can then fetch your bookmarked illusts and insert them into the database:
 
 ```python
-app.bookmark()
+app.bookmarked_illusts()
 ```
 
 ## License

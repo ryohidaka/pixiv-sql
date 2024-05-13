@@ -1,5 +1,5 @@
 CREATE TABLE
-    IF NOT EXISTS bookmarks (
+    IF NOT EXISTS bookmarked_illusts (
         id INTEGER PRIMARY KEY,
         title STRING,
         type_id INTEGER,

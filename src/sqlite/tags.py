@@ -35,16 +35,16 @@ def create_tags_table(self):
     logger.info("[DB] 'tags' table has been created.")
 
 
-def insert_tags(self, bookmarks):
+def insert_tags(self, illusts: list):
     """
-    This function inserts bookmarks into the 'tags' table in the database.
+    This function inserts illusts tags into the 'tags' table in the database.
 
     Args:
-        bookmarks (list): A list of dictionaries where each dictionary represents a bookmark.
+        illusts (list): A list of dictionaries where each dictionary represents a illust.
     """
 
     # Get the SQL insert statements for the tags
-    tags_inserts = get_tags_inserts(bookmarks)
+    tags_inserts = get_tags_inserts(illusts)
 
     # Define the name of the table where the tags will be inserted
     table_name = "tags"

@@ -28,39 +28,39 @@ def get_restrict(self, is_private: bool) -> Literal["private", "public"]:
     return restrict
 
 
-def get_bookmarks_insert(bookmarks, types: list, is_private: bool) -> list[tuple]:
+def get_illusts_insert(illusts, types: list, is_private: bool) -> list[tuple]:
     """
-    This function prepares the bookmark data for insertion into the database.
+    This function prepares the bookmarked illusts data for insertion into the database.
 
     Args:
-        bookmarks (list): A list of dictionaries where each dictionary represents a bookmark.
+        illusts (list): A list of dictionaries where each dictionary represents a bookmarked illust.
         types (list): A list of types. Each type is a dictionary that maps a type name to a type id.
 
     Returns:
-        list[tuple]: A list of tuples where each tuple contains the bookmark data to be inserted.
+        list[tuple]: A list of tuples where each tuple contains the bookmarked illusts data to be inserted.
     """
 
-    # Prepare the data for each bookmark
+    # Prepare the data for each illust
     inserts = []
 
-    for bookmark in bookmarks:
+    for illust in illusts:
         # Get the type id
-        type_id = get_type_id(types, bookmark["type"])
+        type_id = get_type_id(types, illust["type"])
 
         # Get the is_private flag as int
         is_private_value = get_is_private_value(is_private)
 
         inserts.append(
             (
-                bookmark["id"],
-                bookmark["title"],
+                illust["id"],
+                illust["title"],
                 type_id,
-                bookmark["caption"],
-                bookmark["user"]["id"],
-                bookmark["create_date"],
-                bookmark["visible"],
-                bookmark["illust_ai_type"],
-                bookmark["illust_book_style"],
+                illust["caption"],
+                illust["user"]["id"],
+                illust["create_date"],
+                illust["visible"],
+                illust["illust_ai_type"],
+                illust["illust_book_style"],
                 is_private_value,
             )
         )

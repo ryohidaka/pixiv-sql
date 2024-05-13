@@ -1,11 +1,11 @@
 import os
 from dotenv import load_dotenv
-from pixiv_sql.lib.bookmark import get_restrict
+from pixiv_sql.lib.illusts import get_restrict
 from pixiv_sql.lib.logger import init_logger
 from pixivpy.auth import init_api
-from pixivpy.bookmark import get_bookmarks
-from sqlite.bookmarks import create_bookmarks_table, insert_bookmarks
-from sqlite.bookmarks_tags import create_bookmarks_tags_table, insert_bookmarks_tags
+from pixivpy.illusts import get_bookmarked_illusts
+from sqlite.illusts import create_bookmarked_illusts_table, insert_illusts
+from sqlite.illusts_tags import create_illusts_tags_table, insert_illusts_tags
 from sqlite.tags import create_tags_table, insert_tags
 from sqlite.types import create_types_table
 from sqlite.users import create_users_table, insert_users
@@ -22,7 +22,7 @@ def main() -> int:
     database = os.environ.get("DB")
 
     app = PixivSQL(user_id, refresh_token, database)
-    app.bookmark()
+    app.bookmarked_illusts()
 
     return 0
 
@@ -49,46 +49,47 @@ class PixivSQL:
         # Initialize the API.
         self.api = init_api(self)
 
-    def bookmark(self, is_private: bool = False):
+    def bookmarked_illusts(self, is_private: bool = False):
         """
-        The bookmark method for the PixivSQL class.
+        The bookmarked_illusts method for the PixivSQL class.
 
-        This method fetches the bookmarks of the user and inserts them into the database.
+        This method fetches the bookmarked illusts of the user and inserts them into the database.
         It also creates the necessary tables if they do not exist.
 
         Parameters:
-            is_private (bool): A flag to indicate if the bookmarks are private. Default is False.
+            is_private (bool): A flag to indicate if the bookmarked illusts are private. Default is False.
         """
 
         # Get the restrict level based on the is_private flag.
         self.restrict = get_restrict(self, is_private)
+        self.is_private = is_private
 
-        # Fetch the bookmarks from the Pixiv API.
-        bookmarks = get_bookmarks(self)
+        # Fetch the bookmarked illusts from the Pixiv API.
+        illusts = get_bookmarked_illusts(self)
 
-        # Create the bookmarks table in the database.
-        create_bookmarks_table(self)
+        # Create the illusts table in the database.
+        create_bookmarked_illusts_table(self)
 
         # Create the types table in the database.
         create_types_table(self)
 
         # Insert the fetched users into the database.
-        insert_bookmarks(self, bookmarks)
+        insert_illusts(self, illusts)
 
         # Create the users table in the database.
         create_users_table(self)
 
         # Insert the fetched users into the database.
-        insert_users(self, bookmarks)
+        insert_users(self, illusts)
 
         # Create the tags table in the database.
         create_tags_table(self)
 
         # Insert the fetched tags into the database.
-        insert_tags(self, bookmarks)
+        insert_tags(self, illusts)
 
-        # Create the bookmarks_tags table in the database.
-        create_bookmarks_tags_table(self)
+        # Create the illusts_tags table in the database.
+        create_illusts_tags_table(self)
 
-        # Insert the fetched bookmarks_tags pare into the database.
-        insert_bookmarks_tags(self, bookmarks)
+        # Insert the fetched illusts_tags pare into the database.
+        insert_illusts_tags(self, illusts)

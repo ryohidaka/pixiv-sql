@@ -35,16 +35,16 @@ def create_users_table(self):
     logger.info("[DB] 'users' table has been created.")
 
 
-def insert_users(self, bookmarks):
+def insert_users(self, illusts: list):
     """
-    This function inserts bookmarks into the 'users' table in the database.
+    This function inserts data of users who have created bookmarked illustrations into the 'users' table in the database.
 
     Args:
-        bookmarks (list): A list of dictionaries where each dictionary represents a bookmark.
+        illusts (list): A list of dictionaries, each representing a bookmarked illustration.
     """
 
     # Get the SQL insert statements for the users
-    users_inserts = get_users_inserts(bookmarks)
+    users_inserts = get_users_inserts(illusts)
 
     # Define the name of the table where the users will be inserted
     table_name = "users"

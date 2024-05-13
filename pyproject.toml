@@ -22,7 +22,6 @@ Changelog = "https://github.com/ryohidaka/blob/main/pixiv-sql/CHANGELOG.md"
 
 [project.scripts]
 "pixiv-sql" = "pixiv_sql:main"
-"bookmark" = "pixiv_sql:PixivSQL.bookmark"
 
 [build-system]
 requires = ["hatchling"]
