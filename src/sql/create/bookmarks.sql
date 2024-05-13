@@ -9,6 +9,7 @@ CREATE TABLE
         visible INTEGER,
         illust_ai_type INTEGER,
         illust_book_style INTEGER,
+        is_private INTEGER,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (type_id) REFERENCES types (id),

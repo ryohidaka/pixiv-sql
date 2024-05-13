@@ -1,5 +1,6 @@
 from typing import Literal
 
+from pixiv_sql.lib.restrict import get_is_private_value
 from pixiv_sql.lib.type import get_type_id
 
 
@@ -27,7 +28,7 @@ def get_restrict(self, is_private: bool) -> Literal["private", "public"]:
     return restrict
 
 
-def get_bookmarks_insert(bookmarks, types: list) -> list[tuple]:
+def get_bookmarks_insert(bookmarks, types: list, is_private: bool) -> list[tuple]:
     """
     This function prepares the bookmark data for insertion into the database.
 
@@ -46,6 +47,9 @@ def get_bookmarks_insert(bookmarks, types: list) -> list[tuple]:
         # Get the type id
         type_id = get_type_id(types, bookmark["type"])
 
+        # Get the is_private flag as int
+        is_private_value = get_is_private_value(is_private)
+
         inserts.append(
             (
                 bookmark["id"],
@@ -57,6 +61,7 @@ def get_bookmarks_insert(bookmarks, types: list) -> list[tuple]:
                 bookmark["visible"],
                 bookmark["illust_ai_type"],
                 bookmark["illust_book_style"],
+                is_private_value,
             )
         )
 

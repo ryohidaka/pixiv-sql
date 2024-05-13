@@ -48,7 +48,7 @@ def insert_bookmarks(self, bookmarks):
     types = get_types(self)
 
     # Get the SQL insert statements for the bookmarks
-    bookmarks_inserts = get_bookmarks_insert(bookmarks, types)
+    bookmarks_inserts = get_bookmarks_insert(bookmarks, types, self.is_private)
 
     # Define the name of the table where the bookmarks will be inserted
     table_name = "bookmarks"
@@ -64,6 +64,7 @@ def insert_bookmarks(self, bookmarks):
         "visible",
         "illust_ai_type",
         "illust_book_style",
+        "is_private",
     ]
 
     # Call the function to upsert the bookmarks into the table
