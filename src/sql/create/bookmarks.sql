@@ -10,5 +10,7 @@ CREATE TABLE
         illust_ai_type INTEGER,
         illust_book_style INTEGER,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (type_id) REFERENCES types (id),
+        FOREIGN KEY (user_id) REFERENCES users (id)
     );
