@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.2.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.1.0...v0.2.0) (2024-05-13)
+
+
+### Features
+
+* Add "create_date" column to bookmarks table. ([4a57e56](https://github.com/ryohidaka/pixiv-sql/commit/4a57e5603a5dea6d344d4591e32d18bc5de50632))
+* Add "is_private" column to bookmarks table. ([96c1adc](https://github.com/ryohidaka/pixiv-sql/commit/96c1adc9928018454b97c42f1bf21ed5d8d97572))
+* Add foreign key constraint to bookmarks table. ([fadaf86](https://github.com/ryohidaka/pixiv-sql/commit/fadaf86af184857a27394d05462af5d7bf36b116))
+* Add function to create images table. ([1741562](https://github.com/ryohidaka/pixiv-sql/commit/1741562c5ec901c731216fa6a8ee8be74c79fd9c))
+* Add function to create types table. ([de97567](https://github.com/ryohidaka/pixiv-sql/commit/de97567ec61ee199d8cdad5ce8409ea39180d163))
+* Add function to insert images. ([6b9c93f](https://github.com/ryohidaka/pixiv-sql/commit/6b9c93f589d1faad2b457694332ae3caa91af8ce))
+* Modified "type" column on bookmarks table to "type_id" . ([00d5fea](https://github.com/ryohidaka/pixiv-sql/commit/00d5feab0fa375b1ff4ee4b681fa76d59986f881))
+* Rename bookmark file to illust. ([7704107](https://github.com/ryohidaka/pixiv-sql/commit/77041072d3ae6db7592e8379f8e1d0b009fc3f89))
+
+
+### Bug Fixes
+
+* Fixed to ignore duplicate inserts. ([8dca91a](https://github.com/ryohidaka/pixiv-sql/commit/8dca91a6e1449357d191e4650cae7ebc8fa61bc1))
+* Remove unneeded sleep(). ([c994bdc](https://github.com/ryohidaka/pixiv-sql/commit/c994bdc4aae92c4d22d99ff7516e800d56cd0517))
+
+
+### Documentation
+
+* Fix Changelog url. ([2693d7a](https://github.com/ryohidaka/pixiv-sql/commit/2693d7a77e2379e32f94429c9fae45012de5f4d1))
+* Update README ([cf02452](https://github.com/ryohidaka/pixiv-sql/commit/cf02452eb6a2c0a45ef9fefa7aa43661932b1fb0))
+* Update README ([7e3217a](https://github.com/ryohidaka/pixiv-sql/commit/7e3217a53fc8c4e0298348f65a00e64eace5cb36))
+
 ## 0.1.0 (2024-05-12)
 
 
