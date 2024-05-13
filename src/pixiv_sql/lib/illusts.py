@@ -1,6 +1,5 @@
 from typing import Literal
 
-from pixiv_sql.lib.restrict import get_is_private_value
 from pixiv_sql.lib.type import get_type_id
 
 
@@ -48,7 +47,7 @@ def get_illusts_insert(illusts, types: list, is_private: bool) -> list[tuple]:
         type_id = get_type_id(types, illust["type"])
 
         # Get the is_private flag as int
-        is_private_value = get_is_private_value(is_private)
+        is_private_value = 1 if is_private else 0
 
         inserts.append(
             (
