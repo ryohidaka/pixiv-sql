@@ -43,6 +43,7 @@ def get_bookmarks_insert(bookmarks) -> list[tuple]:
             bookmark["type"],
             bookmark["caption"],
             bookmark["user"]["id"],
+            bookmark["create_date"],
             bookmark["visible"],
             bookmark["illust_ai_type"],
             bookmark["illust_book_style"],

@@ -5,6 +5,7 @@ CREATE TABLE
         type STRING,
         caption STRING,
         user_id INTEGER,
+        create_date TIMESTAMP,
         visible INTEGER,
         illust_ai_type INTEGER,
         illust_book_style INTEGER,

@@ -56,6 +56,7 @@ def insert_bookmarks(self, bookmarks):
         "type",
         "caption",
         "user_id",
+        "create_date",
         "visible",
         "illust_ai_type",
         "illust_book_style",
