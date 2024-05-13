@@ -6,7 +6,7 @@ from pixivpy.auth import init_api
 from pixivpy.illusts import get_bookmarked_illusts
 from sqlite.illusts import create_bookmarked_illusts_table, insert_illusts
 from sqlite.illusts_tags import create_illusts_tags_table, insert_illusts_tags
-from sqlite.images import create_images_table
+from sqlite.images import create_images_table, insert_images
 from sqlite.tags import create_tags_table, insert_tags
 from sqlite.types import create_types_table
 from sqlite.users import create_users_table, insert_users
@@ -97,3 +97,6 @@ class PixivSQL:
 
         # Create the images table in the database.
         create_images_table(self)
+
+        # Insert the fetched images into the database.
+        insert_images(self, illusts)
