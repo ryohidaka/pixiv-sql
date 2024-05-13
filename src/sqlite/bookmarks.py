@@ -3,6 +3,7 @@ import sqlite3
 from pixiv_sql.lib.bookmark import get_bookmarks_insert
 from sqlite.insert import upsert_into_table
 from sqlite.sql import get_sql
+from sqlite.types import get_types
 
 
 def create_bookmarks_table(self):
@@ -43,8 +44,11 @@ def insert_bookmarks(self, bookmarks):
         bookmarks (list): A list of dictionaries where each dictionary represents a bookmark.
     """
 
+    # get all types from the database
+    types = get_types(self)
+
     # Get the SQL insert statements for the bookmarks
-    bookmarks_inserts = get_bookmarks_insert(bookmarks)
+    bookmarks_inserts = get_bookmarks_insert(bookmarks, types)
 
     # Define the name of the table where the bookmarks will be inserted
     table_name = "bookmarks"
@@ -53,7 +57,7 @@ def insert_bookmarks(self, bookmarks):
     columns = [
         "id",
         "title",
-        "type",
+        "type_id",
         "caption",
         "user_id",
         "create_date",

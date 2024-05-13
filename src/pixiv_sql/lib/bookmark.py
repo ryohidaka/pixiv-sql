@@ -1,5 +1,7 @@
 from typing import Literal
 
+from pixiv_sql.lib.type import get_type_id
+
 
 def get_restrict(self, is_private: bool) -> Literal["private", "public"]:
     """
@@ -25,30 +27,37 @@ def get_restrict(self, is_private: bool) -> Literal["private", "public"]:
     return restrict
 
 
-def get_bookmarks_insert(bookmarks) -> list[tuple]:
+def get_bookmarks_insert(bookmarks, types: list) -> list[tuple]:
     """
     This function prepares the bookmark data for insertion into the database.
 
     Args:
         bookmarks (list): A list of dictionaries where each dictionary represents a bookmark.
+        types (list): A list of types. Each type is a dictionary that maps a type name to a type id.
 
     Returns:
         list[tuple]: A list of tuples where each tuple contains the bookmark data to be inserted.
     """
+
     # Prepare the data for each bookmark
-    inserts = [
-        (
-            bookmark["id"],
-            bookmark["title"],
-            bookmark["type"],
-            bookmark["caption"],
-            bookmark["user"]["id"],
-            bookmark["create_date"],
-            bookmark["visible"],
-            bookmark["illust_ai_type"],
-            bookmark["illust_book_style"],
+    inserts = []
+
+    for bookmark in bookmarks:
+        # Get the type id
+        type_id = get_type_id(types, bookmark["type"])
+
+        inserts.append(
+            (
+                bookmark["id"],
+                bookmark["title"],
+                type_id,
+                bookmark["caption"],
+                bookmark["user"]["id"],
+                bookmark["create_date"],
+                bookmark["visible"],
+                bookmark["illust_ai_type"],
+                bookmark["illust_book_style"],
+            )
         )
-        for bookmark in bookmarks  # Iterate over each bookmark
-    ]
 
     return inserts  # Return the prepared data

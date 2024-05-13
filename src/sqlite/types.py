@@ -30,3 +30,25 @@ def create_types_table(self):
     conn.close()
 
     logger.info("[DB] 'types' table has been created.")
+
+
+def get_types(self) -> list:
+    """
+    This function is used to get all types from the database.
+
+    Returns:
+        list: A list of all types fetched from the database.
+    """
+
+    # Connect to the database
+    conn = connect_to_database(self.database)
+    cur = conn.cursor()
+
+    # Execute the SQL query to fetch all types
+    cur.execute("SELECT id, name FROM types")
+
+    # Fetch all rows from the executed SQL query
+    rows = cur.fetchall()
+
+    # Return the fetched rows as a list
+    return [row for row in rows]

@@ -2,7 +2,7 @@ CREATE TABLE
     IF NOT EXISTS bookmarks (
         id INTEGER PRIMARY KEY,
         title STRING,
-        type STRING,
+        type_id INTEGER,
         caption STRING,
         user_id INTEGER,
         create_date TIMESTAMP,
