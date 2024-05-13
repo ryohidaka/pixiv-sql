@@ -7,6 +7,7 @@ from pixivpy.bookmark import get_bookmarks
 from sqlite.bookmarks import create_bookmarks_table, insert_bookmarks
 from sqlite.bookmarks_tags import create_bookmarks_tags_table, insert_bookmarks_tags
 from sqlite.tags import create_tags_table, insert_tags
+from sqlite.types import create_types_table
 from sqlite.users import create_users_table, insert_users
 
 # Load .env file and reflect environment variables.
@@ -67,6 +68,9 @@ class PixivSQL:
 
         # Create the bookmarks table in the database.
         create_bookmarks_table(self)
+
+        # Create the types table in the database.
+        create_types_table(self)
 
         # Insert the fetched users into the database.
         insert_bookmarks(self, bookmarks)
