@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/ryohidaka/pixiv-sql/compare/v0.2.0...v0.2.1) (2024-05-13)
+
+
+### Bug Fixes
+
+* Fix ModuleNotFoundError. ([9bcac2e](https://github.com/ryohidaka/pixiv-sql/commit/9bcac2ecd27485d475a56aebadf5b3eb11377bd1))
+
 ## [0.2.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.1.0...v0.2.0) (2024-05-13)
 
 
