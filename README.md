@@ -16,12 +16,18 @@ pip install pixiv-sql
 
 ## Usage
 
-initialize the PixivSQL class with your Pixiv user ID, refresh token, and database:
+Create dataBase file
+
+```bash
+touch db/my_pixiv.db
+```
+
+Initialize the PixivSQL class with your Pixiv user ID, refresh token, and database:
 
 ```python
 user_id = "your_user_id"
 refresh_token = "your_refresh_token"
-database = "your_database_path_from_root_dir"
+database = "db/my_pixiv.db"
 
 app = PixivSQL(user_id, refresh_token, database)
 ```
