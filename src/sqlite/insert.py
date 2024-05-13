@@ -22,7 +22,7 @@ def insert_into_table(self, table_name: str, columns: list[str], values: list[tu
 
     # Define the SQL query for inserting data
     insert_query = f"""
-        INSERT INTO {table_name} ({', '.join(columns)})
+        INSERT OR IGNORE INTO {table_name} ({', '.join(columns)})
         VALUES ({', '.join(['?' for _ in columns])})
     """
 
