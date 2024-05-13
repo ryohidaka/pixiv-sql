@@ -18,7 +18,7 @@ keywords = ["pixiv"]
 Homepage = "https://github.com/ryohidaka/pixiv-sql"
 Repository = "https://github.com/ryohidaka/pixiv-sql"
 Issues = "https://github.com/ryohidaka/pixiv-sql/issues"
-Changelog = "https://github.com/ryohidaka/pixiv-sql/CHANGELOG.md"
+Changelog = "https://github.com/ryohidaka/blob/main/pixiv-sql/CHANGELOG.md"
 
 [project.scripts]
 "pixiv-sql" = "pixiv_sql:main"
