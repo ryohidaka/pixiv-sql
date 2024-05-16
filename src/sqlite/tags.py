@@ -1,8 +1,7 @@
 import sqlite3
 
 from pixiv_sql.lib.tags import get_tags_inserts
-from sqlite.insert import upsert_into_table
-from sqlite.sql import get_sql
+from sqlite.utils import get_sql, upsert_into_table
 
 
 def create_tags_table(self):

@@ -1,8 +1,7 @@
 import sqlite3
 
 from pixiv_sql.lib.tags import get_bookmarks_tags_inserts
-from sqlite.insert import insert_into_table
-from sqlite.sql import get_sql
+from sqlite.utils import get_sql, insert_into_table
 
 
 def create_illusts_tags_table(self):

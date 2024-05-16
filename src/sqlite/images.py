@@ -1,8 +1,7 @@
 import sqlite3
 
 from pixiv_sql.lib.images import get_image_inserts
-from sqlite.insert import insert_into_table
-from sqlite.sql import get_sql
+from sqlite.utils import get_sql, insert_into_table
 
 
 def create_images_table(self):

@@ -1,4 +1,4 @@
-from sqlite.database import connect_to_database, execute_query
+from sqlite.utils import connect_to_database, execute_query
 
 
 def insert_into_table(self, table_name: str, columns: list[str], values: list[tuple]):

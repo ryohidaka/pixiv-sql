@@ -1,8 +1,7 @@
 import sqlite3
 
 from pixiv_sql.lib.illusts import get_illusts_insert
-from sqlite.insert import upsert_into_table
-from sqlite.sql import get_sql
+from sqlite.utils import get_sql, upsert_into_table
 from sqlite.types import get_types
 
 

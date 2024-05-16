@@ -1,5 +1,4 @@
-from sqlite.database import connect_to_database
-from sqlite.sql import get_sql
+from sqlite.utils import connect_to_database, get_sql
 
 
 def create_types_table(self):
