@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "pixivpy3>=3.7.5",
     "python-dotenv>=1.0.1",
+    "sqlalchemy>=2.0.31",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"

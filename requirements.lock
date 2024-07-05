@@ -14,6 +14,8 @@ charset-normalizer==3.3.2
     # via requests
 cloudscraper==1.2.71
     # via pixivpy3
+greenlet==3.0.3
+    # via sqlalchemy
 idna==3.7
     # via requests
 pixivpy3==3.7.5
@@ -29,8 +31,11 @@ requests==2.31.0
 requests-toolbelt==1.0.0
     # via cloudscraper
     # via pixivpy3
+sqlalchemy==2.0.31
+    # via pixiv-sql
 typing-extensions==4.11.0
     # via pixivpy3
+    # via sqlalchemy
 urllib3==2.2.1
     # via pixivpy3
     # via requests
