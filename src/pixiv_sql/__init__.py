@@ -1,8 +1,22 @@
 import os
 from dotenv import load_dotenv
-from pixiv_sql.bookmarks import fetch_and_insert_bookmarked_illusts
 from pixiv_sql.lib.logger import init_logger
+from pixiv_sql.lib.pixiv import (
+    collect_bookmarked_illust_records,
+    collect_image_records,
+    collect_tag_records,
+    collect_user_records,
+    get_restrict,
+)
+from pixiv_sql.lib.sql import create_tables, get_engine, get_session, upsert
+from pixiv_sql.model.bookmarked_illust import BookmarkedIllust
+from pixiv_sql.model.illust_tag import IllustTag
+from pixiv_sql.model.image import Image
+from pixiv_sql.model.tag import Tag
+from pixiv_sql.model.type import Type
+from pixiv_sql.model.user import User
 from pixivpy.auth import init_api
+from pixivpy.illusts import get_bookmarked_illusts
 
 # Load .env file and reflect environment variables.
 load_dotenv()
@@ -16,6 +30,7 @@ def main() -> int:
     database = os.environ.get("DB")
 
     app = PixivSQL(user_id, refresh_token, database)
+
     app.bookmarked_illusts()
 
     return 0
@@ -43,7 +58,16 @@ class PixivSQL:
         # Initialize the API.
         self.api = init_api(self)
 
-    def bookmarked_illusts(self, is_private: bool = False):
+        # Create Engine
+        self.engine = get_engine(database)
+
+        # Create Session
+        self.session = get_session(self.engine)
+
+        # Create Tables
+        create_tables(self.engine)
+
+    def bookmarked_illusts(self, is_private: bool = True):
         """
         The bookmarked_illusts method for the PixivSQL class.
 
@@ -53,4 +77,39 @@ class PixivSQL:
         Parameters:
             is_private (bool): A flag to indicate if the bookmarked illusts are private. Default is False.
         """
-        fetch_and_insert_bookmarked_illusts(self, is_private)
+
+        # Get the restrict level based on the is_private flag.
+        self.restrict = get_restrict(self, is_private)
+        self.is_private = is_private
+
+        # Fetch the bookmarked illusts from the Pixiv API.
+        illusts = get_bookmarked_illusts(self)
+
+        # Insert the types of illusts into the database.
+        types = ["illust", "manga", "ugoira"]
+        for index, type_name in enumerate(types):
+            upsert(self.session, Type, id=index + 1, name=type_name)
+
+        # Insert the fetched users into the database.
+        users = collect_user_records(illusts)
+        for user in users:
+            upsert(self.session, User, **user)
+
+        # Insert the fetched bookmarked illusts into the database.
+        bookmarked_illusts = collect_bookmarked_illust_records(illusts, is_private)
+        for illust in bookmarked_illusts:
+            upsert(self.session, BookmarkedIllust, **illust)
+
+        # Insert the fetched tags into the database.
+        tags, illust_tags = collect_tag_records(illusts)
+        for tag in tags:
+            upsert(self.session, Tag, **tag)
+
+        # Insert the fetched illusts_tags pare into the database.
+        for illust_tag in illust_tags:
+            upsert(self.session, IllustTag, id=None, **illust_tag)
+
+        # Insert the fetched images into the database.
+        images = collect_image_records(illusts)
+        for image in images:
+            upsert(self.session, Image, id=None, **image)
