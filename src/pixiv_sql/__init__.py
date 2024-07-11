@@ -9,6 +9,7 @@ from pixiv_sql.lib.pixiv import (
     collect_user_records,
     get_restrict,
 )
+from pixiv_sql.lib.pixivpy import get_bookmarked_illusts, init_api
 from pixiv_sql.lib.sql import create_tables, get_engine, get_session, upsert
 from pixiv_sql.model.bookmarked_illust import BookmarkedIllust
 from pixiv_sql.model.illust_tag import IllustTag
@@ -16,8 +17,7 @@ from pixiv_sql.model.image import Image
 from pixiv_sql.model.tag import Tag
 from pixiv_sql.model.type import Type
 from pixiv_sql.model.user import User
-from pixivpy.auth import init_api
-from pixivpy.illusts import get_bookmarked_illusts
+
 
 # Load .env file and reflect environment variables.
 load_dotenv()
