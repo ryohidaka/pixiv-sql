@@ -43,7 +43,8 @@ def get_restrict(self, is_private: bool) -> Literal["private", "public"]:
 
 
 def is_ignore_file(filename: str) -> bool:
-    return filename == "limit_unknown_360.png"
+    ignore_list = ["limit_unknown_360.png", "limit_sanity_level_360.png"]
+    return filename in ignore_list
 
 
 def get_filename(url: str) -> str:
