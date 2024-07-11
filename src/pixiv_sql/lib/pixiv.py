@@ -1,5 +1,6 @@
 from datetime import datetime
 import hashlib
+import json
 from typing import Literal
 
 from pixiv_sql.model import Image
@@ -63,50 +64,60 @@ def get_filename(url: str) -> str:
 def collect_user_records(illusts):
     users = []
     for illust in illusts:
-        user = illust["user"]
+        try:
+            user = illust["user"]
 
-        # Get is_followed or default to None if not present
-        is_followed = user.get("is_followed")
+            # Get is_followed or default to None if not present
+            is_followed = user.get("is_followed")
 
-        filename = get_filename(user["profile_image_urls"]["medium"])
-        profile_image_urls = (
-            user["profile_image_urls"]["medium"]
-            if filename != "no_profile.png"
-            else None
-        )
+            filename = get_filename(user["profile_image_urls"]["medium"])
+            profile_image_urls = (
+                user["profile_image_urls"]["medium"]
+                if filename != "no_profile.png"
+                else None
+            )
 
-        users.append(
-            {
-                "id": user["id"],
-                "name": user["name"],
-                "account": user["account"],
-                "is_followed": is_followed,
-                "profile_image_urls": profile_image_urls,
-            }
-        )
+            users.append(
+                {
+                    "id": user["id"],
+                    "name": user["name"],
+                    "account": user["account"],
+                    "is_followed": is_followed,
+                    "profile_image_urls": profile_image_urls,
+                }
+            )
+        except KeyError as e:
+            print(f"Issue with user record: {e}")
+            print(json.dumps(user, indent=4, ensure_ascii=False))
+            continue  # Continue to the next illust if there's an issue with the current one
     return users
 
 
 def collect_bookmarked_illust_records(illusts, is_private):
     records = []
     for illust in illusts:
-        user_id = illust["user"]["id"]
-        records.append(
-            {
-                "id": illust["id"],
-                "title": illust["title"],
-                "caption": illust["caption"],
-                "user_id": user_id,
-                "create_date": datetime.strptime(
-                    illust["create_date"], "%Y-%m-%dT%H:%M:%S%z"
-                ),
-                "page_count": illust["page_count"],
-                "visible": illust["visible"],
-                "illust_ai_type": illust["illust_ai_type"],
-                "illust_book_style": illust["illust_book_style"],
-                "is_private": is_private,
-            }
-        )
+        try:
+            user_id = illust["user"]["id"]
+            records.append(
+                {
+                    "id": illust["id"],
+                    "title": illust["title"],
+                    "caption": illust["caption"],
+                    "user_id": user_id,
+                    "create_date": datetime.strptime(
+                        illust["create_date"], "%Y-%m-%dT%H:%M:%S%z"
+                    ),
+                    "page_count": illust["page_count"],
+                    "visible": illust["visible"],
+                    "illust_ai_type": illust["illust_ai_type"],
+                    "illust_book_style": illust["illust_book_style"],
+                    "is_private": is_private,
+                }
+            )
+        except KeyError as e:
+            print(f"Issue with illusts record: {e}")
+            print(json.dumps(illusts, indent=4, ensure_ascii=False))
+            continue  # Continue to the next illust if there's an issue with the current one
     return records
 
 
@@ -114,92 +125,109 @@ def collect_tag_records(illusts):
     tags = {}
     illust_tags = []
     for illust in illusts:
-        for tag in illust["tags"]:
-            tag_id = generate_unique_index(tag["name"])
-            tags[tag_id] = {
-                "id": tag_id,
-                "name": tag["name"],
-                "translated_name": tag.get("translated_name"),
-            }
-            illust_tags.append({"illust_id": illust["id"], "tag_id": tag_id})
+        try:
+            for tag in illust["tags"]:
+                tag_id = generate_unique_index(tag["name"])
+                tags[tag_id] = {
+                    "id": tag_id,
+                    "name": tag["name"],
+                    "translated_name": tag.get("translated_name"),
+                }
+                illust_tags.append({"illust_id": illust["id"], "tag_id": tag_id})
+        except KeyError as e:
+            print(f"Issue with tag record: {e}")
+            print(json.dumps(illust["tags"], indent=4, ensure_ascii=False))
+            continue  # Continue to the next illust if there's an issue with the current one
     return tags.values(), illust_tags
 
 
 def collect_image_records(illusts, session):
     images = []
     for illust in illusts:
-        if illust["meta_pages"]:
-            for index, page in enumerate(illust["meta_pages"]):
-                original_image_url = page["image_urls"]["original"]
-                if not is_ignore_file(get_filename(original_image_url)):
-                    filename = get_filename(original_image_url)
+        try:
+            if illust["meta_pages"]:
+                for index, page in enumerate(illust["meta_pages"]):
+                    original_image_url = page["image_urls"]["original"]
+                    if not is_ignore_file(get_filename(original_image_url)):
+                        filename = get_filename(original_image_url)
 
-                    image = (
-                        session.query(Image).filter(Image.filename == filename).all()
-                    )
-
-                    if not image:
-                        images.append(
-                            {
-                                "illust_id": illust["id"],
-                                "page": index,
-                                "is_multiple_page": True,
-                                "filename": get_filename(original_image_url),
-                                "url": original_image_url,
-                                "is_square": False,
-                            }
+                        image = (
+                            session.query(Image)
+                            .filter(Image.filename == filename)
+                            .all()
                         )
 
-                    square_medium_image_url = page["image_urls"]["square_medium"]
+                        if not image:
+                            images.append(
+                                {
+                                    "illust_id": illust["id"],
+                                    "page": index,
+                                    "is_multiple_page": True,
+                                    "filename": get_filename(original_image_url),
+                                    "url": original_image_url,
+                                    "is_square": False,
+                                }
+                            )
 
-                    filename = get_filename(square_medium_image_url)
+                        square_medium_image_url = page["image_urls"]["square_medium"]
 
-                    image = (
-                        session.query(Image).filter(Image.filename == filename).all()
-                    )
+                        filename = get_filename(square_medium_image_url)
 
-                    if not image:
-                        images.append(
-                            {
-                                "illust_id": illust["id"],
-                                "page": index,
-                                "is_multiple_page": True,
-                                "filename": get_filename(square_medium_image_url),
-                                "url": square_medium_image_url,
-                                "is_square": True,
-                            }
+                        image = (
+                            session.query(Image)
+                            .filter(Image.filename == filename)
+                            .all()
                         )
 
-        else:
-            original_image_url = illust["meta_single_page"]["original_image_url"]
-            filename = get_filename(original_image_url)
+                        if not image:
+                            images.append(
+                                {
+                                    "illust_id": illust["id"],
+                                    "page": index,
+                                    "is_multiple_page": True,
+                                    "filename": get_filename(square_medium_image_url),
+                                    "url": square_medium_image_url,
+                                    "is_square": True,
+                                }
+                            )
 
-            image = session.query(Image).filter(Image.filename == filename).all()
+            else:
+                original_image_url = illust["meta_single_page"]["original_image_url"]
+                filename = get_filename(original_image_url)
 
-            if not is_ignore_file(filename) and not image:
-                images.append(
-                    {
-                        "illust_id": illust["id"],
-                        "page": 0,
-                        "is_multiple_page": False,
-                        "filename": get_filename(original_image_url),
-                        "url": original_image_url,
-                        "is_square": False,
-                    }
-                )
-            square_medium_image_url = illust["image_urls"]["square_medium"]
-            filename = get_filename(square_medium_image_url)
-            image = session.query(Image).filter(Image.filename == filename).all()
+                image = session.query(Image).filter(Image.filename == filename).all()
 
-            if not image:
-                images.append(
-                    {
-                        "illust_id": illust["id"],
-                        "page": 0,
-                        "is_multiple_page": False,
-                        "filename": get_filename(square_medium_image_url),
-                        "url": square_medium_image_url,
-                        "is_square": True,
-                    }
-                )
+                if not is_ignore_file(filename) and not image:
+                    images.append(
+                        {
+                            "illust_id": illust["id"],
+                            "page": 0,
+                            "is_multiple_page": False,
+                            "filename": get_filename(original_image_url),
+                            "url": original_image_url,
+                            "is_square": False,
+                        }
+                    )
+
+                square_medium_image_url = illust["image_urls"]["square_medium"]
+                filename = get_filename(square_medium_image_url)
+
+                image = session.query(Image).filter(Image.filename == filename).all()
+
+                if not image:
+                    images.append(
+                        {
+                            "illust_id": illust["id"],
+                            "page": 0,
+                            "is_multiple_page": False,
+                            "filename": get_filename(square_medium_image_url),
+                            "url": square_medium_image_url,
+                            "is_square": True,
+                        }
+                    )
+
+        except KeyError as e:
+            print(f"Issue with image record: {e}")
+            print(json.dumps(illust, indent=4, ensure_ascii=False))
+            continue  # Continue to the next illust if there's an issue with the current one
     return images
