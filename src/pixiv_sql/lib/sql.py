@@ -62,6 +62,10 @@ def upsert(session, model, **kwargs) -> int:
         return instance.id
     except exc.SQLAlchemyError as e:
         session.rollback()
-        raise e
+        print(f"Error occurred: {e}")
+        print(model)
+        print(instance)
+        # Handle the error gracefully, optionally log it
+        # You can choose to raise an exception or handle it as per your application's needs
     finally:
         session.close()
