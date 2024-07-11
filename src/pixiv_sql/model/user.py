@@ -11,4 +11,5 @@ class User(BaseModel):
 
     name = Column(String(255), nullable=False)
     account = Column(String(255), nullable=False)
-    is_followed = Column(Boolean, nullable=False)
+    is_followed = Column(Boolean)
+    profile_image_urls = Column(String(255))

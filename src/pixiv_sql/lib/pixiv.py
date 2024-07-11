@@ -64,12 +64,24 @@ def collect_user_records(illusts):
     users = []
     for illust in illusts:
         user = illust["user"]
+
+        # Get is_followed or default to None if not present
+        is_followed = user.get("is_followed")
+
+        filename = get_filename(user["profile_image_urls"]["medium"])
+        profile_image_urls = (
+            user["profile_image_urls"]["medium"]
+            if filename != "no_profile.png"
+            else None
+        )
+
         users.append(
             {
                 "id": user["id"],
                 "name": user["name"],
                 "account": user["account"],
-                "is_followed": user["is_followed"],
+                "is_followed": is_followed,
+                "profile_image_urls": profile_image_urls,
             }
         )
     return users
