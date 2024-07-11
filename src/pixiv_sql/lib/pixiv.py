@@ -88,6 +88,7 @@ def collect_bookmarked_illust_records(illusts, is_private):
                 "create_date": datetime.strptime(
                     illust["create_date"], "%Y-%m-%dT%H:%M:%S%z"
                 ),
+                "page_count": illust["page_count"],
                 "visible": illust["visible"],
                 "illust_ai_type": illust["illust_ai_type"],
                 "illust_book_style": illust["illust_book_style"],

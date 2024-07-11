@@ -14,6 +14,7 @@ class BookmarkedIllust(BaseModel):
     caption = Column(String(255), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"))
     create_date = Column(DateTime, nullable=False)
+    page_count = Column(Integer, nullable=False)
     visible = Column(Boolean, nullable=False)
     illust_ai_type = Column(Integer, nullable=False)
     illust_book_style = Column(Integer, nullable=False)
