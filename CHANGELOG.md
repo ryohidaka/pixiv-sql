@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.3.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.2.1...v0.3.0) (2024-07-11)
+
+
+### Features
+
+* Add error handling at collect_records() ([e22da13](https://github.com/ryohidaka/pixiv-sql/commit/e22da13133d76fe90d532b27343c0dc70a516346))
+* Add error handling at upsert() ([62a7800](https://github.com/ryohidaka/pixiv-sql/commit/62a780090062246c4967bb8c2454edb9237ad2ca))
+* Add ignore file pattern. ([2e5c487](https://github.com/ryohidaka/pixiv-sql/commit/2e5c487983c56438033ecad68fcefed227aaef70))
+* Add page_count on bookmarked_illusts_table. ([ca275d7](https://github.com/ryohidaka/pixiv-sql/commit/ca275d7ca40770457da4002b047e5c29c620d358))
+* Add tqdm ([28f49e2](https://github.com/ryohidaka/pixiv-sql/commit/28f49e2becedcdb7dac14a5118b1433549fd894e))
+* Install sqlalchemy. ([2291aa6](https://github.com/ryohidaka/pixiv-sql/commit/2291aa6ff411a800761e9b3f7b6c8202ebe43de3))
+* Install tqdm ([8eb5596](https://github.com/ryohidaka/pixiv-sql/commit/8eb5596804a7b4384df0521562083858886732ed))
+* Migrate to SQLAlchemy. ([20b50b7](https://github.com/ryohidaka/pixiv-sql/commit/20b50b7a9ec6d1223f00a380694179058649a431))
+
+
+### Bug Fixes
+
+* Modified collect_user_records ([1eb61c4](https://github.com/ryohidaka/pixiv-sql/commit/1eb61c46a69667777c144af9b6df6327e17100eb))
+* Modified error handling when fetch bookmarked illusts. ([fd0286e](https://github.com/ryohidaka/pixiv-sql/commit/fd0286e80078b19f68f50f521042542fedea97cc))
+* Prevents duplicate image registration. ([67a64c1](https://github.com/ryohidaka/pixiv-sql/commit/67a64c10bb7c430589bf40d255225cafecb77cea))
+* Remove unused module. ([d927a1e](https://github.com/ryohidaka/pixiv-sql/commit/d927a1ef59f856813b9ed4a85bb22f1589772cb6))
+
 ## [0.2.1](https://github.com/ryohidaka/pixiv-sql/compare/v0.2.0...v0.2.1) (2024-05-13)
 
 
