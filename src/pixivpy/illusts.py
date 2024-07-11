@@ -5,7 +5,7 @@ def get_bookmarked_illusts(self):
     """
     This function retrieves a list of bookmarked illusts for a user.
     It fetches bookmarks in a loop until there are no more bookmarks to fetch.
-    If an error occurs during the fetching process, it logs the error and breaks the loop.
+    If an error occurs during the fetching process, it logs the error but continues fetching.
     """
 
     self.logger.info("[Start] Getting bookmarked illust list")
@@ -22,16 +22,20 @@ def get_bookmarked_illusts(self):
             illusts += res.illusts
             next_url = res.next_url
 
-            # If there is a next URL, parse it and fetch the next set of bookmarked illusts.
-            if next_url:
+        except Exception as e:
+            self.logger.error("Failed to get the bookmark:", str(e))
+            res = None  # Set res to None to handle in the next step
+
+        # If there is a next URL, parse it and fetch the next set of bookmarked illusts.
+        if res and next_url:
+            try:
                 next_qs = self.api.parse_qs(res.next_url)
                 self.logger.info(f"Next: {next_qs}")
                 res = fetch_bookmarked_illusts(self, **next_qs)
-            else:
-                break
-
-        except Exception as e:
-            self.logger.error("Failed to get the bookmark.:", str(e))
+            except Exception as e:
+                self.logger.error("Failed to fetch next bookmarked illusts:", str(e))
+                res = None  # Proceed to the next loop iteration
+        else:
             break
 
     self.logger.info("[End] Getting bookmarked illust list")
@@ -59,5 +63,5 @@ def fetch_bookmarked_illusts(self, **kwargs):
         time.sleep(5)
         return res
     except Exception as e:
-        self.logger.error("Failed to fetch bookmarked illusts: ", str(e))
+        self.logger.error("Failed to fetch bookmarked illusts:", str(e))
         return None
