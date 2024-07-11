@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/ryohidaka/pixiv-sql/compare/v0.3.0...v0.3.1) (2024-07-11)
+
+
+### Bug Fixes
+
+* Fixed an error where a module could not be referenced. ([2aa39c0](https://github.com/ryohidaka/pixiv-sql/commit/2aa39c0f59412ec73283941d3bd312ae5fddc5ee))
+
 ## [0.3.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.2.1...v0.3.0) (2024-07-11)
 
 
