@@ -135,48 +135,48 @@ def collect_image_records(illusts, session):
                     filename = get_filename(original_image_url)
 
                     image = (
-                        session.query(Image).filter(Image.filename == filename).first()
+                        session.query(Image).filter(Image.filename == filename).all()
                     )
 
-                    if image:
-                        return
-
-                    images.append(
-                        {
-                            "illust_id": illust["id"],
-                            "page": index,
-                            "is_multiple_page": True,
-                            "filename": get_filename(original_image_url),
-                            "url": original_image_url,
-                            "is_square": False,
-                        }
-                    )
+                    if not image:
+                        images.append(
+                            {
+                                "illust_id": illust["id"],
+                                "page": index,
+                                "is_multiple_page": True,
+                                "filename": get_filename(original_image_url),
+                                "url": original_image_url,
+                                "is_square": False,
+                            }
+                        )
 
                     square_medium_image_url = page["image_urls"]["square_medium"]
 
                     filename = get_filename(square_medium_image_url)
 
                     image = (
-                        session.query(Image).filter(Image.filename == filename).first()
+                        session.query(Image).filter(Image.filename == filename).all()
                     )
 
-                    if image:
-                        return
-
-                    images.append(
-                        {
-                            "illust_id": illust["id"],
-                            "page": index,
-                            "is_multiple_page": True,
-                            "filename": get_filename(square_medium_image_url),
-                            "url": square_medium_image_url,
-                            "is_square": True,
-                        }
-                    )
+                    if not image:
+                        images.append(
+                            {
+                                "illust_id": illust["id"],
+                                "page": index,
+                                "is_multiple_page": True,
+                                "filename": get_filename(square_medium_image_url),
+                                "url": square_medium_image_url,
+                                "is_square": True,
+                            }
+                        )
 
         else:
             original_image_url = illust["meta_single_page"]["original_image_url"]
-            if not is_ignore_file(get_filename(original_image_url)):
+            filename = get_filename(original_image_url)
+
+            image = session.query(Image).filter(Image.filename == filename).all()
+
+            if not is_ignore_file(filename) and not image:
                 images.append(
                     {
                         "illust_id": illust["id"],
@@ -188,14 +188,18 @@ def collect_image_records(illusts, session):
                     }
                 )
             square_medium_image_url = illust["image_urls"]["square_medium"]
-            images.append(
-                {
-                    "illust_id": illust["id"],
-                    "page": 0,
-                    "is_multiple_page": False,
-                    "filename": get_filename(square_medium_image_url),
-                    "url": square_medium_image_url,
-                    "is_square": True,
-                }
-            )
+            filename = get_filename(square_medium_image_url)
+            image = session.query(Image).filter(Image.filename == filename).all()
+
+            if not image:
+                images.append(
+                    {
+                        "illust_id": illust["id"],
+                        "page": 0,
+                        "is_multiple_page": False,
+                        "filename": get_filename(square_medium_image_url),
+                        "url": square_medium_image_url,
+                        "is_square": True,
+                    }
+                )
     return images
