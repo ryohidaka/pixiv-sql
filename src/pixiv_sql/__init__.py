@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from tqdm import tqdm
 from pixiv_sql.lib.logger import init_logger
 from pixiv_sql.lib.pixiv import (
     collect_bookmarked_illust_records,
@@ -92,24 +93,24 @@ class PixivSQL:
 
         # Insert the fetched users into the database.
         users = collect_user_records(illusts)
-        for user in users:
+        for user in tqdm(users, desc="Users"):
             upsert(self.session, User, **user)
 
         # Insert the fetched bookmarked illusts into the database.
         bookmarked_illusts = collect_bookmarked_illust_records(illusts, is_private)
-        for illust in bookmarked_illusts:
+        for illust in tqdm(bookmarked_illusts, desc="Bookmarked Illusts"):
             upsert(self.session, BookmarkedIllust, **illust)
 
         # Insert the fetched tags into the database.
         tags, illust_tags = collect_tag_records(illusts)
-        for tag in tags:
+        for tag in tqdm(tags, desc="Tags"):
             upsert(self.session, Tag, **tag)
 
         # Insert the fetched illusts_tags pare into the database.
-        for illust_tag in illust_tags:
+        for illust_tag in tqdm(illust_tags, desc="Illust Tags"):
             upsert(self.session, IllustTag, id=None, **illust_tag)
 
         # Insert the fetched images into the database.
-        images = collect_image_records(illusts)
-        for image in images:
+        images = collect_image_records(illusts, self.session)
+        for image in tqdm(images, desc="Images"):
             upsert(self.session, Image, id=None, **image)
