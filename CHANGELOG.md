@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/ryohidaka/pixiv-sql/compare/v0.3.1...v0.3.2) (2024-07-12)
+
+
+### Bug Fixes
+
+* Skip if visible is 0 ([664e30f](https://github.com/ryohidaka/pixiv-sql/commit/664e30fe768d6879e21bc69a8176eaf56dfb9aba))
+
 ## [0.3.1](https://github.com/ryohidaka/pixiv-sql/compare/v0.3.0...v0.3.1) (2024-07-11)
 
 
