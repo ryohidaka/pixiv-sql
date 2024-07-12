@@ -97,6 +97,10 @@ def collect_bookmarked_illust_records(illusts, is_private):
     records = []
     for illust in illusts:
         try:
+            # Skip illusts where visible is 0
+            if illust.get("visible", 1) == 0:
+                continue
+
             user_id = illust["user"]["id"]
             records.append(
                 {
@@ -145,6 +149,10 @@ def collect_image_records(illusts, session):
     images = []
     for illust in illusts:
         try:
+            # Skip illusts where visible is 0
+            if illust.get("visible", 1) == 0:
+                continue
+
             if illust["meta_pages"]:
                 for index, page in enumerate(illust["meta_pages"]):
                     original_image_url = page["image_urls"]["original"]
