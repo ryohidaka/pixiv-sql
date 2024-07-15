@@ -35,8 +35,15 @@ def create_tables(engine):
 
 def upsert(session, model, **kwargs) -> int:
     """
-    Insert data
-    Update existing data, if any
+    Insert data if it does not exist, update existing data if any.
+
+    Parameters:
+    session (Session): SQLAlchemy session object.
+    model: SQLAlchemy model class.
+    kwargs: Column values for the model.
+
+    Returns:
+    int: ID of the upserted instance.
     """
     table = model.__table__
     primary_key = list(table.primary_key.columns.keys())[0]
@@ -47,11 +54,14 @@ def upsert(session, model, **kwargs) -> int:
 
     if instance:
         # Update updated_at when changes are made
+        updated = False
         for key, value in kwargs.items():
             if getattr(instance, key) != value:
                 setattr(instance, key, value)
-                instance.updated_at = datetime.now()
-        session.add(instance)
+                updated = True
+        if updated:
+            instance.updated_at = datetime.now()
+            session.add(instance)
     else:
         # Insert new instance
         instance = model(**kwargs)
