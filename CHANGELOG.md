@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.3.4...v0.4.0) (2024-07-15)
+
+
+### Features
+
+* Add function to get random illust records. ([e2f2815](https://github.com/ryohidaka/pixiv-sql/commit/e2f2815d6625b7d8982d1a5b6579444244803f95))
+* Add function to insert registered tags. ([daee200](https://github.com/ryohidaka/pixiv-sql/commit/daee2005f32520852aaeb55787ff6a13dc3bc39e))
+* Add is_registered column on illusts_tags table. ([c77202e](https://github.com/ryohidaka/pixiv-sql/commit/c77202e288a69e7ee8c0f7415c75ac45cdcbe9d5))
+
 ## [0.3.4](https://github.com/ryohidaka/pixiv-sql/compare/v0.3.3...v0.3.4) (2024-07-15)
 
 
