@@ -55,9 +55,19 @@ def upsert(session, model, **kwargs) -> int:
     if instance:
         # Update updated_at when changes are made
         updated = False
+        changes = []
         for key, value in kwargs.items():
-            if getattr(instance, key) != value:
+            old_value = getattr(instance, key)
+
+            # Ensure both old_value and value are naive datetime objects (without timezone)
+            if isinstance(old_value, datetime) and old_value.tzinfo is not None:
+                old_value = old_value.replace(tzinfo=None)
+            if isinstance(value, datetime) and value.tzinfo is not None:
+                value = value.replace(tzinfo=None)
+
+            if old_value != value:
                 setattr(instance, key, value)
+                changes.append((key, old_value, value))
                 updated = True
         if updated:
             instance.updated_at = datetime.now()
