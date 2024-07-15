@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.4](https://github.com/ryohidaka/pixiv-sql/compare/v0.3.3...v0.3.4) (2024-07-15)
+
+
+### Bug Fixes
+
+* Fixed compare process of create_date on upsert(). ([0ab81a0](https://github.com/ryohidaka/pixiv-sql/commit/0ab81a0115747209b7e19ee3b15412ef4a1700fd))
+
 ## [0.3.3](https://github.com/ryohidaka/pixiv-sql/compare/v0.3.2...v0.3.3) (2024-07-15)
 
 
