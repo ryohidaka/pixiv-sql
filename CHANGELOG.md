@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.3](https://github.com/ryohidaka/pixiv-sql/compare/v0.3.2...v0.3.3) (2024-07-15)
+
+
+### Bug Fixes
+
+* Skip user if name is empty. ([4a4fe89](https://github.com/ryohidaka/pixiv-sql/commit/4a4fe8912296cad5f573fcab3860feb41c6e0f59))
+* Upsert function to only update columns with changed values. ([8ccd745](https://github.com/ryohidaka/pixiv-sql/commit/8ccd745e4bd842b1514261322420438255a00cc4))
+
 ## [0.3.2](https://github.com/ryohidaka/pixiv-sql/compare/v0.3.1...v0.3.2) (2024-07-12)
 
 
