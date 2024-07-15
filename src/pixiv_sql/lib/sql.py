@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import create_engine, exc
+from sqlalchemy import create_engine, exc, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -89,3 +89,25 @@ def upsert(session, model, **kwargs) -> int:
         # You can choose to raise an exception or handle it as per your application's needs
     finally:
         session.close()
+
+
+def get_random_records(session, model, limit: int):
+    """
+    Fetches a specified number of random records from the database.
+
+    Parameters:
+        session (Session): SQLAlchemy session object.
+        model: SQLAlchemy model class.
+        limit (int): The number of random records to fetch.
+
+    Returns:
+        list: A list of random records from the database.
+
+    """
+    # Fetch random records
+    random_records = session.query(model).order_by(func.random()).limit(limit).all()
+
+    # Close the session
+    session.close()
+
+    return random_records

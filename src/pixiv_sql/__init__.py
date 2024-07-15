@@ -14,7 +14,13 @@ from pixiv_sql.lib.pixivpy import (
     get_illusts_registered_tags,
     init_api,
 )
-from pixiv_sql.lib.sql import create_tables, get_engine, get_session, upsert
+from pixiv_sql.lib.sql import (
+    create_tables,
+    get_engine,
+    get_random_records,
+    get_session,
+    upsert,
+)
 from pixiv_sql.model.bookmarked_illust import BookmarkedIllust
 from pixiv_sql.model.illust_tag import IllustTag
 from pixiv_sql.model.image import Image
@@ -37,6 +43,9 @@ def main() -> int:
     app = PixivSQL(user_id, refresh_token, database)
 
     app.bookmarked_illusts()
+
+    random_ids = app.get_random_illust_ids()
+    app.registered_tags(illust_ids=random_ids)
 
     return 0
 
@@ -139,3 +148,19 @@ class PixivSQL:
         # Insert the fetched illusts_tags pare into the database.
         for illust_tag in tqdm(illust_tags, desc="Illust Tags"):
             upsert(self.session, IllustTag, id=None, **illust_tag)
+
+    def get_random_illust_ids(self, limit=10):
+        """
+        The get_random_illust_ids method for the PixivSQL class.
+
+        This method gets random illust records.
+
+        Parameters:
+            limit (int): Number of records to retrieve.
+        """
+        random_illusts = get_random_records(self.session, BookmarkedIllust, limit)
+
+        # Get list of ids
+        random_ids = [record.id for record in random_illusts]
+
+        return random_ids
