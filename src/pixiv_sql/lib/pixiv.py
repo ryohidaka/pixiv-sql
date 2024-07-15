@@ -67,6 +67,10 @@ def collect_user_records(illusts):
         try:
             user = illust["user"]
 
+            # Skip user where name is empty
+            if not user.get("name"):
+                continue
+
             # Get is_followed or default to None if not present
             is_followed = user.get("is_followed")
 
