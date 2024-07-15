@@ -9,7 +9,11 @@ from pixiv_sql.lib.pixiv import (
     collect_user_records,
     get_restrict,
 )
-from pixiv_sql.lib.pixivpy import get_bookmarked_illusts, init_api
+from pixiv_sql.lib.pixivpy import (
+    get_bookmarked_illusts,
+    get_illusts_registered_tags,
+    init_api,
+)
 from pixiv_sql.lib.sql import create_tables, get_engine, get_session, upsert
 from pixiv_sql.model.bookmarked_illust import BookmarkedIllust
 from pixiv_sql.model.illust_tag import IllustTag
@@ -114,3 +118,24 @@ class PixivSQL:
         images = collect_image_records(illusts, self.session)
         for image in tqdm(images, desc="Images"):
             upsert(self.session, Image, id=None, **image)
+
+    def registered_tags(self, illust_ids: list[int]):
+        """
+        The registered_tags method for the PixivSQL class.
+
+        This method fetches the registered tags of the given illust ids and inserts them into the database.
+
+        Parameters:
+            illust_ids (list[int]): List of target illustration id.
+        """
+        illusts_registered_tags = get_illusts_registered_tags(self, illust_ids)
+
+        tags, illust_tags = collect_tag_records(illusts_registered_tags)
+
+        # Insert the fetched tags into the database.
+        for tag in tqdm(tags, desc="Tags"):
+            upsert(self.session, Tag, **tag)
+
+        # Insert the fetched illusts_tags pare into the database.
+        for illust_tag in tqdm(illust_tags, desc="Illust Tags"):
+            upsert(self.session, IllustTag, id=None, **illust_tag)

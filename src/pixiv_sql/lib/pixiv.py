@@ -249,3 +249,23 @@ def collect_image_records(illusts, session):
             print(json.dumps(illust, indent=4, ensure_ascii=False))
             continue  # Continue to the next illust if there's an issue with the current one
     return images
+
+
+def collect_registered_tag_records(illusts):
+    tags = {}
+    illust_tags = []
+    for illust in illusts:
+        try:
+            for tag in illust["tags"]:
+                tag_id = generate_unique_index(tag["name"])
+                tags[tag_id] = {
+                    "id": tag_id,
+                    "name": tag["name"],
+                    "translated_name": tag.get("translated_name"),
+                }
+                illust_tags.append({"illust_id": illust["id"], "tag_id": tag_id})
+        except KeyError as e:
+            print(f"Issue with tag record: {e}")
+            print(json.dumps(illust["tags"], indent=4, ensure_ascii=False))
+            continue  # Continue to the next illust if there's an issue with the current one
+    return tags.values(), illust_tags

@@ -1,5 +1,6 @@
 import time
 from pixivpy3 import AppPixivAPI
+from tqdm import tqdm
 
 
 def init_api(self) -> AppPixivAPI:
@@ -80,4 +81,55 @@ def fetch_bookmarked_illusts(self, **kwargs):
         return res
     except Exception as e:
         self.logger.error("Failed to fetch bookmarked illusts:", str(e))
+        return None
+
+
+def get_illusts_registered_tags(self, illust_ids: list[int]):
+    """
+    This function retrieves a list of registered tags a given illust IDs.
+    If an error occurs during the fetching process, it logs the error but continues fetching.
+    """
+    self.logger.info("[Start] Getting bookmarked illust detail list")
+
+    # Define a list to store illusts.
+    illusts_registered_tags = []
+
+    for id in tqdm(illust_ids, desc="Registered Tags"):
+        try:
+            registered_tags = fetch_registered_tags(self, id)
+            illusts_registered_tags.append(
+                {
+                    "id": id,
+                    "tags": registered_tags,
+                }
+            )
+        except Exception as e:
+            self.logger.error("Failed to get the bookmark detail:", str(e))
+            return None
+
+    self.logger.info("[End] Getting bookmarked illust detail list")
+
+    return illusts_registered_tags
+
+
+def fetch_registered_tags(self, id: int):
+    """
+    This function fetches registered tags for a given illust ID.
+    It makes a call to the Pixiv API and returns the response.
+    If an error occurs during the API call, it logs the error and returns None.
+    """
+
+    try:
+        res = self.api.illust_bookmark_detail(id)
+        time.sleep(3)
+
+        # Get bookmark tag list
+        bookmark_tags = res["bookmark_detail"]["tags"]
+
+        # Get registered tags in an array
+        registered_tags = [item for item in bookmark_tags if item["is_registered"]]
+
+        return registered_tags
+    except Exception as e:
+        self.logger.error("Failed to fetch bookmarked illust detail:", str(e))
         return None
