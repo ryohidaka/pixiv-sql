@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.1](https://github.com/ryohidaka/pixiv-sql/compare/v0.4.0...v0.4.1) (2024-07-16)
+
+
+### Bug Fixes
+
+* Fix default value for is_private. ([0137bb3](https://github.com/ryohidaka/pixiv-sql/commit/0137bb3930eb4f8a08d10f003cd639b24d20a595))
+* Fixed overwriting of translated_name with null when inserting registered_tags. ([c2226c2](https://github.com/ryohidaka/pixiv-sql/commit/c2226c2edfc9c25a365f4d690e4a03467a0ce8fd))
+
 ## [0.4.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.3.4...v0.4.0) (2024-07-15)
 
 
