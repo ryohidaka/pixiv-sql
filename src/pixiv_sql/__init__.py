@@ -139,7 +139,7 @@ class PixivSQL:
         """
         illusts_registered_tags = get_illusts_registered_tags(self, illust_ids)
 
-        tags, illust_tags = collect_tag_records(illusts_registered_tags)
+        tags, illust_tags = collect_tag_records(illusts_registered_tags, self.session)
 
         # Insert the fetched tags into the database.
         for tag in tqdm(tags, desc="Tags"):

@@ -3,7 +3,7 @@ import hashlib
 import json
 from typing import Literal
 
-from pixiv_sql.model import Image
+from pixiv_sql.model import Image, Tag
 
 
 def generate_unique_index(name) -> int:
@@ -251,18 +251,21 @@ def collect_image_records(illusts, session):
     return images
 
 
-def collect_registered_tag_records(illusts):
+def collect_registered_tag_records(illusts, session):
     tags = {}
     illust_tags = []
     for illust in illusts:
         try:
             for tag in illust["tags"]:
                 tag_id = generate_unique_index(tag["name"])
-                tags[tag_id] = {
-                    "id": tag_id,
-                    "name": tag["name"],
-                    "translated_name": tag.get("translated_name"),
-                }
+
+                if not session.query(Tag).filter(Tag.id == tag_id).all():
+                    tags[tag_id] = {
+                        "id": tag_id,
+                        "name": tag["name"],
+                        "translated_name": tag.get("translated_name"),
+                    }
+
                 illust_tags.append({"illust_id": illust["id"], "tag_id": tag_id})
         except KeyError as e:
             print(f"Issue with tag record: {e}")
