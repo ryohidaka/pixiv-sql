@@ -81,7 +81,7 @@ class PixivSQL:
         # Create Tables
         create_tables(self.engine)
 
-    def bookmarked_illusts(self, is_private: bool = True):
+    def bookmarked_illusts(self, is_private: bool = False):
         """
         The bookmarked_illusts method for the PixivSQL class.
 
