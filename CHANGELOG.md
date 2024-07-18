@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/ryohidaka/pixiv-sql/compare/v0.4.1...v0.4.2) (2024-07-18)
+
+
+### Bug Fixes
+
+* Fixed process to get registered_tag. ([79103d0](https://github.com/ryohidaka/pixiv-sql/commit/79103d0a324d8efff24b72229f6e131277f80f59))
+
 ## [0.4.1](https://github.com/ryohidaka/pixiv-sql/compare/v0.4.0...v0.4.1) (2024-07-16)
 
 
