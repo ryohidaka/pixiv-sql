@@ -5,6 +5,7 @@ from pixiv_sql.lib.logger import init_logger
 from pixiv_sql.lib.pixiv import (
     collect_bookmarked_illust_records,
     collect_image_records,
+    collect_registered_tag_records,
     collect_tag_records,
     collect_user_records,
     get_restrict,
@@ -139,7 +140,9 @@ class PixivSQL:
         """
         illusts_registered_tags = get_illusts_registered_tags(self, illust_ids)
 
-        tags, illust_tags = collect_tag_records(illusts_registered_tags, self.session)
+        tags, illust_tags = collect_registered_tag_records(
+            illusts_registered_tags, self.session
+        )
 
         # Insert the fetched tags into the database.
         for tag in tqdm(tags, desc="Tags"):
