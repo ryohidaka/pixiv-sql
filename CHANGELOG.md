@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.1...v0.5.2) (2024-07-18)
+
+
+### Bug Fixes
+
+* Fixed data in the illust_tag table to be a unique combination. ([0d1e267](https://github.com/ryohidaka/pixiv-sql/commit/0d1e267f023614ed822964f0b36959f1897b3769))
+
 ## [0.5.1](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.0...v0.5.1) (2024-07-18)
 
 
