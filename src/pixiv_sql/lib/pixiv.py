@@ -272,3 +272,48 @@ def collect_registered_tag_records(illusts, session):
             print(json.dumps(illust["tags"], indent=4, ensure_ascii=False))
             continue  # Continue to the next illust if there's an issue with the current one
     return tags.values(), illust_tags
+
+
+def collect_user_following_records(following_users):
+    users = []
+
+    for following_user in following_users[:1]:
+        try:
+            user = following_user.user
+
+            # Skip user where name is empty
+            if not user.get("name"):
+                continue
+
+            # Get is_followed or default to None if not present
+            is_followed = user.get("is_followed")
+
+            filename = get_filename(user["profile_image_urls"]["medium"])
+            profile_image_urls = (
+                user["profile_image_urls"]["medium"]
+                if filename != "no_profile.png"
+                else None
+            )
+
+            # Set last_create_date to None if "illusts" does not exist
+            last_create_date = (
+                user.get("illusts", [{}])[0].get("create_date")
+                if user.get("illusts")
+                else None
+            )
+
+            users.append(
+                {
+                    "id": user["id"],
+                    "name": user["name"],
+                    "account": user["account"],
+                    "is_followed": is_followed,
+                    "profile_image_urls": profile_image_urls,
+                    "last_create_date": last_create_date,
+                }
+            )
+        except KeyError as e:
+            print(f"Issue with user record: {e}")
+            print(json.dumps(user, indent=4, ensure_ascii=False))
+            continue  # Continue to the next user if there's an issue with the current one
+    return users

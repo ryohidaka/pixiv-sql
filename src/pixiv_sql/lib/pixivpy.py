@@ -133,3 +133,69 @@ def fetch_registered_tags(self, id: int):
     except Exception as e:
         self.logger.error("Failed to fetch bookmarked illust detail:", str(e))
         return None
+
+
+def get_user_following(self):
+    """
+    This function retrieves a list of following users for a user.
+    It fetches user_following in a loop until there are no more user to fetch.
+    If an error occurs during the fetching process, it logs the error but continues fetching.
+    """
+
+    self.logger.info("[Start] Getting user_following list")
+
+    # Define a list to store following users.
+    users = []
+
+    # Get a list of user_following.
+    res = fetch_user_following(self)
+
+    while res:
+        try:
+            # Extract the illustrations from the response.
+            users += res.user_previews
+            next_url = res.next_url
+
+        except Exception as e:
+            self.logger.error("Failed to get user_following:", str(e))
+            res = None  # Set res to None to handle in the next step
+
+        # If there is a next URL, parse it and fetch the next set of user_following.
+        if res and next_url:
+            try:
+                next_qs = self.api.parse_qs(res.next_url)
+                self.logger.info(f"Next: {next_qs}")
+                res = fetch_user_following(self, **next_qs)
+            except Exception as e:
+                self.logger.error("Failed to fetch next user_following:", str(e))
+                res = None  # Proceed to the next loop iteration
+        else:
+            break
+
+    self.logger.info("[End] Getting user_following list")
+
+    return users
+
+
+def fetch_user_following(self, **kwargs):
+    """
+    This function fetches user_following for a given user ID.
+    It makes a call to the Pixiv API and returns the response.
+    If an error occurs during the API call, it logs the error and returns None.
+    """
+
+    try:
+        # Remove 'user_id' from kwargs if it exists
+        kwargs.pop("user_id", None)
+
+        # Remove 'restrict' from kwargs if it exists
+        kwargs.pop("restrict", None)
+
+        res = self.api.user_following(
+            user_id=self.user_id, restrict=self.restrict, **kwargs
+        )
+        time.sleep(5)
+        return res
+    except Exception as e:
+        self.logger.error("Failed to fetch user_following:", str(e))
+        return None

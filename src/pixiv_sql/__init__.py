@@ -7,12 +7,14 @@ from pixiv_sql.lib.pixiv import (
     collect_image_records,
     collect_registered_tag_records,
     collect_tag_records,
+    collect_user_following_records,
     collect_user_records,
     get_restrict,
 )
 from pixiv_sql.lib.pixivpy import (
     get_bookmarked_illusts,
     get_illusts_registered_tags,
+    get_user_following,
     init_api,
 )
 from pixiv_sql.lib.sql import (
@@ -47,6 +49,8 @@ def main() -> int:
 
     random_ids = app.get_random_illust_ids()
     app.registered_tags(illust_ids=random_ids)
+
+    app.user_following()
 
     return 0
 
@@ -167,3 +171,24 @@ class PixivSQL:
         random_ids = [record.id for record in random_illusts]
 
         return random_ids
+
+    def user_following(self, is_private: bool = False):
+        """
+        The user_following method for the PixivSQL class.
+
+        This method fetches the following users of the user and inserts them into the database.
+        It also creates the necessary tables if they do not exist.
+
+        Parameters:
+            is_private (bool): A flag to indicate if the following users are private. Default is False.
+        """
+        # Get the restrict level based on the is_private flag.
+        self.restrict = get_restrict(self, is_private)
+        self.is_private = is_private
+
+        following_users = get_user_following(self)
+        following_users = collect_user_following_records(following_users)
+
+        # Insert the fetched user_following into the database.
+        for user in tqdm(following_users, desc="User Following"):
+            upsert(self.session, User, **user)
