@@ -266,7 +266,9 @@ def collect_registered_tag_records(illusts, session):
                         "translated_name": tag.get("translated_name"),
                     }
 
-                illust_tags.append({"illust_id": illust["id"], "tag_id": tag_id})
+                illust_tags.append(
+                    {"illust_id": illust["id"], "tag_id": tag_id, "is_registered": True}
+                )
         except KeyError as e:
             print(f"Issue with tag record: {e}")
             print(json.dumps(illust["tags"], indent=4, ensure_ascii=False))
