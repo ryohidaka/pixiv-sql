@@ -122,7 +122,7 @@ class PixivSQL:
         # Insert the fetched tags into the database.
         tags, illust_tags = collect_tag_records(illusts)
         for tag in tqdm(tags, desc="Tags"):
-            upsert(self.session, Tag, **tag)
+            upsert(self.session, Tag, True, **tag)
 
         # Insert the fetched illusts_tags pare into the database.
         for illust_tag in tqdm(illust_tags, desc="Illust Tags"):
