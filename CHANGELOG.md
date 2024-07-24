@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.2...v0.5.3) (2024-07-24)
+
+
+### Bug Fixes
+
+* Fixed a bug that caused duplicate registration of "illust_tag" ([f9431f2](https://github.com/ryohidaka/pixiv-sql/commit/f9431f21daf65faac46b4fc665ee2c0c61637a17))
+
 ## [0.5.2](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.1...v0.5.2) (2024-07-18)
 
 
