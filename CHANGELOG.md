@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.2](https://github.com/ryohidaka/pixiv-sql/compare/v0.6.1...v0.6.2) (2024-07-26)
+
+
+### Bug Fixes
+
+* Remove return value of upsert(). ([88baee4](https://github.com/ryohidaka/pixiv-sql/commit/88baee461541a8a19485124e00c4b017282d51c7))
+* Support upsert() with multiple primary keys. ([413a591](https://github.com/ryohidaka/pixiv-sql/commit/413a591b7a251050d4d2ad8a3bb5bf1778d198db))
+
 ## [0.6.1](https://github.com/ryohidaka/pixiv-sql/compare/v0.6.0...v0.6.1) (2024-07-26)
 
 
