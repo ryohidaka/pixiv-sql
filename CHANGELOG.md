@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/ryohidaka/pixiv-sql/compare/v0.6.0...v0.6.1) (2024-07-26)
+
+
+### Bug Fixes
+
+* Remove id column from illusts_tags table. ([66a3de0](https://github.com/ryohidaka/pixiv-sql/commit/66a3de0567cb235db1252956761b6817243089ab))
+
 ## [0.6.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.7...v0.6.0) (2024-07-26)
 
 
