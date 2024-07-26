@@ -46,11 +46,10 @@ def upsert(session, model, **kwargs):
     int: ID of the upserted instance.
     """
     table = model.__table__
-    primary_key = list(table.primary_key.columns.keys())[0]
+    primary_keys = list(table.primary_key.columns.keys())
 
-    instance = (
-        session.query(model).filter_by(**{primary_key: kwargs[primary_key]}).first()
-    )
+    filter_kwargs = {key: kwargs[key] for key in primary_keys}
+    instance = session.query(model).filter_by(**filter_kwargs).first()
 
     if instance:
         # Update updated_at when changes are made
