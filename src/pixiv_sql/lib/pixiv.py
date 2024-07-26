@@ -289,7 +289,7 @@ def collect_registered_tag_records(illusts, session):
 def collect_user_following_records(following_users):
     users = []
 
-    for following_user in following_users[:1]:
+    for following_user in following_users:
         try:
             user = following_user.user
 
@@ -309,8 +309,8 @@ def collect_user_following_records(following_users):
 
             # Set last_create_date to None if "illusts" does not exist
             last_create_date = (
-                user.get("illusts", [{}])[0].get("create_date")
-                if user.get("illusts")
+                following_user.get("illusts", [{}])[0].get("create_date")
+                if following_user.get("illusts")
                 else None
             )
 
@@ -321,7 +321,9 @@ def collect_user_following_records(following_users):
                     "account": user["account"],
                     "is_followed": is_followed,
                     "profile_image_urls": profile_image_urls,
-                    "last_create_date": last_create_date,
+                    "last_create_date": datetime.strptime(
+                        last_create_date, "%Y-%m-%dT%H:%M:%S%z"
+                    ),
                 }
             )
         except KeyError as e:
