@@ -126,7 +126,7 @@ class PixivSQL:
 
         # Insert the fetched illusts_tags pare into the database.
         for illust_tag in tqdm(illust_tags, desc="Illust Tags"):
-            upsert(self.session, IllustTag, True, id=None, **illust_tag)
+            upsert(self.session, IllustTag, id=None, **illust_tag)
 
         # Insert the fetched images into the database.
         images = collect_image_records(illusts, self.session)
