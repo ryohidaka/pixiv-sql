@@ -33,7 +33,7 @@ def create_tables(engine):
     Base.metadata.create_all(bind=engine)
 
 
-def upsert(session, model, **kwargs) -> int:
+def upsert(session, model, **kwargs):
     """
     Insert data if it does not exist, update existing data if any.
 
@@ -79,7 +79,6 @@ def upsert(session, model, **kwargs) -> int:
 
     try:
         session.commit()
-        return instance.id
     except exc.SQLAlchemyError as e:
         session.rollback()
         print(f"Error occurred: {e}")
