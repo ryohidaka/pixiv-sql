@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.5](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.4...v0.5.5) (2024-07-26)
+
+
+### Bug Fixes
+
+* Fixed a bug that caused duplicate registration of "illust_tag" ([0da5e79](https://github.com/ryohidaka/pixiv-sql/commit/0da5e7983f8d9e7e543ab3b74c49db35d189629c))
+* Fixed function to insert user_following. ([6f5c80d](https://github.com/ryohidaka/pixiv-sql/commit/6f5c80d85bf02083c5ac9ac0978325e8a1858a63))
+
 ## [0.5.4](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.3...v0.5.4) (2024-07-25)
 
 
