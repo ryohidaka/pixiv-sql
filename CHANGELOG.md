@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.6](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.5...v0.5.6) (2024-07-26)
+
+
+### Bug Fixes
+
+* Fixed arguments for insert_illust_tags process. ([aa54a9f](https://github.com/ryohidaka/pixiv-sql/commit/aa54a9faa55beeedce5a2576a4602942f88cc833))
+
 ## [0.5.5](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.4...v0.5.5) (2024-07-26)
 
 
