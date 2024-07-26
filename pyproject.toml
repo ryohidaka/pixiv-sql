@@ -1,6 +1,6 @@
 [project]
 name = "pixiv-sql"
-version = "0.5.7"
+version = "0.6.0"
 description = "Python library to backup pixiv user data to SQLite DB."
 authors = [
     { name = "ryohidaka", email = "39184410+ryohidaka@users.noreply.github.com" }
