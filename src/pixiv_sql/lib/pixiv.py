@@ -309,7 +309,10 @@ def collect_user_following_records(following_users):
 
             # Set last_create_date to None if "illusts" does not exist
             last_create_date = (
-                following_user.get("illusts", [{}])[0].get("create_date")
+                datetime.strptime(
+                    following_user.get("illusts", [{}])[0].get("create_date"),
+                    "%Y-%m-%dT%H:%M:%S%z",
+                )
                 if following_user.get("illusts")
                 else None
             )
@@ -321,9 +324,7 @@ def collect_user_following_records(following_users):
                     "account": user["account"],
                     "is_followed": is_followed,
                     "profile_image_urls": profile_image_urls,
-                    "last_create_date": datetime.strptime(
-                        last_create_date, "%Y-%m-%dT%H:%M:%S%z"
-                    ),
+                    "last_create_date": last_create_date,
                 }
             )
         except KeyError as e:
