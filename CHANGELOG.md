@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.7](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.6...v0.5.7) (2024-07-26)
+
+
+### Bug Fixes
+
+* Fixed error that last_create_date cannot be cast to datetime when last_create_date is None. ([3e76408](https://github.com/ryohidaka/pixiv-sql/commit/3e7640824fd01c610a68967f247f59884147f5c8))
+
 ## [0.5.6](https://github.com/ryohidaka/pixiv-sql/compare/v0.5.5...v0.5.6) (2024-07-26)
 
 
