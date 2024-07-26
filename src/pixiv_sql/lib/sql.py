@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import and_, create_engine, exc, func
+from sqlalchemy import create_engine, exc, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -33,7 +33,7 @@ def create_tables(engine):
     Base.metadata.create_all(bind=engine)
 
 
-def upsert(session, model, unique=False, **kwargs) -> int:
+def upsert(session, model, **kwargs) -> int:
     """
     Insert data if it does not exist, update existing data if any.
 
@@ -41,7 +41,6 @@ def upsert(session, model, unique=False, **kwargs) -> int:
     session (Session): SQLAlchemy session object.
     model: SQLAlchemy model class.
     kwargs: Column values for the model.
-    unique (bool): If True, only unique combinations of columns (excluding id, created_at, updated_at) are registered.
 
     Returns:
     int: ID of the upserted instance.
@@ -49,19 +48,9 @@ def upsert(session, model, unique=False, **kwargs) -> int:
     table = model.__table__
     primary_key = list(table.primary_key.columns.keys())[0]
 
-    if unique:
-        # Exclude id, created_at, updated_at from unique check
-        unique_columns = [
-            col
-            for col in kwargs.keys()
-            if col not in ["id", "created_at", "updated_at"]
-        ]
-        filters = [getattr(model, col) == kwargs[col] for col in unique_columns]
-        instance = session.query(model).filter(and_(*filters)).first()
-    else:
-        instance = (
-            session.query(model).filter_by(**{primary_key: kwargs[primary_key]}).first()
-        )
+    instance = (
+        session.query(model).filter_by(**{primary_key: kwargs[primary_key]}).first()
+    )
 
     if instance:
         # Update updated_at when changes are made

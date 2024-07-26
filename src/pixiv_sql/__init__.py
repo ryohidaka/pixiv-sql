@@ -154,7 +154,7 @@ class PixivSQL:
 
         # Insert the fetched illusts_tags pare into the database.
         for illust_tag in tqdm(illust_tags, desc="Illust Tags"):
-            upsert(self.session, IllustTag, True, **illust_tag)
+            upsert(self.session, IllustTag, id=None, **illust_tag)
 
     def get_random_illust_ids(self, limit=10):
         """
