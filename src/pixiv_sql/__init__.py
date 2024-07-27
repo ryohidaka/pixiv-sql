@@ -7,6 +7,7 @@ from pixiv_sql.lib.pixiv import (
     collect_illust_statistics_records,
     collect_image_records,
     collect_registered_tag_records,
+    collect_series_records,
     collect_tag_records,
     collect_user_following_records,
     collect_user_records,
@@ -26,9 +27,11 @@ from pixiv_sql.lib.sql import (
     upsert,
 )
 from pixiv_sql.model.bookmarked_illust import BookmarkedIllust
+from pixiv_sql.model.illust_series import IllustSeries
 from pixiv_sql.model.illust_statistics import IllustStatistics
 from pixiv_sql.model.illust_tag import IllustTag
 from pixiv_sql.model.image import Image
+from pixiv_sql.model.series import Series
 from pixiv_sql.model.tag import Tag
 from pixiv_sql.model.type import Type
 from pixiv_sql.model.user import User
@@ -134,6 +137,15 @@ class PixivSQL:
         illust_statistics = collect_illust_statistics_records(illusts)
         for statistics in tqdm(illust_statistics, desc="IllustStatistics"):
             upsert(self.session, IllustStatistics, **statistics)
+
+        # Insert the fetched series into the database.
+        series, illust_series = collect_series_records(illusts)
+        for series_data in tqdm(series, desc="Series"):
+            upsert(self.session, Series, **series_data)
+
+        # Insert the fetched illusts_series pare into the database.
+        for illust_series_data in tqdm(illust_series, desc="Illust Series"):
+            upsert(self.session, IllustSeries, **illust_series_data)
 
         # Insert the fetched images into the database.
         images = collect_image_records(illusts, self.session)

@@ -184,6 +184,28 @@ def collect_illust_statistics_records(illusts):
     return illust_statistics
 
 
+def collect_series_records(illusts):
+    series = []
+    illust_series = []
+    for illust in illusts:
+        try:
+            series_data = illust.get("series")
+            if not series_data:
+                continue
+
+            series_id = series_data["id"]
+
+            series.append({"id": series_id, "title": series_data["title"]})
+
+            illust_series.append({"illust_id": illust["id"], "series_id": series_id})
+
+        except KeyError as e:
+            print(f"Issue with series record: {e}")
+            print(json.dumps(illust.get("series"), indent=4, ensure_ascii=False))
+            continue  # Continue to the next illust if there's an issue with the current one
+    return series, illust_series
+
+
 def collect_image_records(illusts, session):
     images = []
     for illust in illusts:
