@@ -4,6 +4,7 @@ from tqdm import tqdm
 from pixiv_sql.lib.logger import init_logger
 from pixiv_sql.lib.pixiv import (
     collect_bookmarked_illust_records,
+    collect_illust_statistics_records,
     collect_image_records,
     collect_registered_tag_records,
     collect_tag_records,
@@ -25,6 +26,7 @@ from pixiv_sql.lib.sql import (
     upsert,
 )
 from pixiv_sql.model.bookmarked_illust import BookmarkedIllust
+from pixiv_sql.model.illust_statistics import IllustStatistics
 from pixiv_sql.model.illust_tag import IllustTag
 from pixiv_sql.model.image import Image
 from pixiv_sql.model.tag import Tag
@@ -127,6 +129,11 @@ class PixivSQL:
         # Insert the fetched illusts_tags pare into the database.
         for illust_tag in tqdm(illust_tags, desc="Illust Tags"):
             upsert(self.session, IllustTag, **illust_tag)
+
+        # Insert the fetched illust statistics into the database.
+        illust_statistics = collect_illust_statistics_records(illusts)
+        for statistics in tqdm(illust_statistics, desc="IllustStatistics"):
+            upsert(self.session, IllustStatistics, **statistics)
 
         # Insert the fetched images into the database.
         images = collect_image_records(illusts, self.session)

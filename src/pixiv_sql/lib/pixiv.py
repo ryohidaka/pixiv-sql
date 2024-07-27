@@ -165,6 +165,25 @@ def collect_tag_records(illusts, session):
     return tags.values(), illust_tags
 
 
+def collect_illust_statistics_records(illusts):
+    illust_statistics = []
+    for illust in illusts:
+        try:
+            illust_statistics.append(
+                {
+                    "illust_id": illust["id"],
+                    "total_view": illust["total_view"],
+                    "total_bookmarks": illust["total_bookmarks"],
+                }
+            )
+
+        except KeyError as e:
+            print(f"Issue with illust_statistics record: {e}")
+            print(json.dumps(illust, indent=4, ensure_ascii=False))
+            continue  # Continue to the next illust if there's an issue with the current one
+    return illust_statistics
+
+
 def collect_image_records(illusts, session):
     images = []
     for illust in illusts:
