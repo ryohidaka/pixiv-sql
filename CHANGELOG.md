@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.7.0...v0.8.0) (2024-07-27)
+
+
+### Features
+
+* Add series. ([3f5d431](https://github.com/ryohidaka/pixiv-sql/commit/3f5d431fb773d282e160daced82a99df0c35b3ff))
+
 ## [0.7.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.6.2...v0.7.0) (2024-07-27)
 
 
