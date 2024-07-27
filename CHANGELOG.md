@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.6.2...v0.7.0) (2024-07-27)
+
+
+### Features
+
+* Add llust_statistics table for "total_view" and "total_bookmarks". ([117dd5a](https://github.com/ryohidaka/pixiv-sql/commit/117dd5aad0b260de6551c07a8dc0c91202c9f268))
+
+
+### Bug Fixes
+
+* Rename "BaseJoinModel" to "BaseWithoutIdModel". ([473c564](https://github.com/ryohidaka/pixiv-sql/commit/473c5648aa6890d2f3700f7dbec71caef3948945))
+
 ## [0.6.2](https://github.com/ryohidaka/pixiv-sql/compare/v0.6.1...v0.6.2) (2024-07-26)
 
 
