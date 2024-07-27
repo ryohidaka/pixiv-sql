@@ -1,4 +1,4 @@
-from .base import BaseModel, BaseJoinModel
+from .base import BaseModel, BaseWithoutIdModel
 from .bookmarked_illust import BookmarkedIllust
 from .illust_tag import IllustTag
 from .image import Image
@@ -8,7 +8,7 @@ from .user import User
 
 __all__ = [
     BaseModel,
-    BaseJoinModel,
+    BaseWithoutIdModel,
     BookmarkedIllust,
     IllustTag,
     Image,

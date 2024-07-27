@@ -1,8 +1,8 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer
-from pixiv_sql.model.base import BaseJoinModel
+from pixiv_sql.model.base import BaseWithoutIdModel
 
 
-class IllustTag(BaseJoinModel):
+class IllustTag(BaseWithoutIdModel):
     """
     IllustTag Model
     """

@@ -16,7 +16,7 @@ class BaseModel(Base):
     updated_at = Column(DateTime, default=datetime.now, nullable=False)
 
 
-class BaseJoinModel(Base):
+class BaseWithoutIdModel(Base):
     """
     BaseJoin Model
     """
