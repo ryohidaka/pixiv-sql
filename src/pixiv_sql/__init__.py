@@ -23,6 +23,7 @@ from pixiv_sql.lib.sql import (
     create_tables,
     get_engine,
     get_random_records,
+    get_records,
     get_session,
     upsert,
 )
@@ -52,8 +53,12 @@ def main() -> int:
 
     app.bookmarked_illusts()
 
+    ids = app.get_illust_ids(key="created_at", order="desc")
     random_ids = app.get_random_illust_ids()
-    app.registered_tags(illust_ids=random_ids)
+
+    illust_ids = ids + random_ids
+
+    app.registered_tags(illust_ids=illust_ids)
 
     app.user_following()
 
@@ -190,6 +195,22 @@ class PixivSQL:
         random_ids = [record.id for record in random_illusts]
 
         return random_ids
+
+    def get_illust_ids(self, limit=10, key: str = None, order: str = "asc"):
+        """
+        The get_illust_ids method for the PixivSQL class.
+
+        This method gets illust records.
+
+        Parameters:
+            limit (int): Number of records to retrieve.
+        """
+        illusts = get_records(self.session, BookmarkedIllust, limit, key, order)
+
+        # Get list of ids
+        illust_ids = [record.id for record in illusts]
+
+        return illust_ids
 
     def user_following(self, is_private: bool = False):
         """

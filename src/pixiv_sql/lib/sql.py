@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import create_engine, exc, func
+from sqlalchemy import asc, create_engine, desc, exc, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -109,3 +109,37 @@ def get_random_records(session, model, limit: int):
     session.close()
 
     return random_records
+
+
+def get_records(session, model, limit: int, key: str, order: str):
+    """
+    Fetches a specified number of records from the database with optional sorting.
+
+    Parameters:
+        session (Session): SQLAlchemy session object.
+        model: SQLAlchemy model class.
+        limit (int): The number of records to fetch.
+        key (str, optional): The key (column name) to sort by. If None, no sorting is applied.
+        order (str, optional): The sorting order ('asc' for ascending, 'desc' for descending).
+                               Defaults to 'asc'.
+
+    Returns:
+        list: A list of records from the database.
+
+    """
+    query = session.query(model)
+
+    # Apply sorting if key is provided
+    if key:
+        if order == "desc":
+            query = query.order_by(desc(getattr(model, key)))
+        else:
+            query = query.order_by(asc(getattr(model, key)))
+
+    # Limit the number of records
+    records = query.limit(limit).all()
+
+    # Close the session
+    session.close()
+
+    return records
