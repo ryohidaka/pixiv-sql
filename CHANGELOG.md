@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.8.0...v0.9.0) (2024-10-17)
+
+
+### Features
+
+* Add function to get illust records. ([331163e](https://github.com/ryohidaka/pixiv-sql/commit/331163e0e769a39ec92b1be6efea3287295c1f60))
+
 ## [0.8.0](https://github.com/ryohidaka/pixiv-sql/compare/v0.7.0...v0.8.0) (2024-07-27)
 
 
